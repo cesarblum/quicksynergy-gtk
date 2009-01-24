@@ -1,0 +1,21 @@
+QuickSynergy NEWS
+
+Copyright (C) 2006, 2007, 2008 Cesar L. B. Silveira, Otavio C. Cordeiro
+
+Version 0.8.1:
+* Fixed potential segmentation faults when loading/saving configuration
+  files (patch submitted by Jérémie Corbier)
+
+Version 0.8:
+* Removed KeepRunning option for builds using GTK+ < 2.10
+* Added main window icon (thanks Thomas Langewouters)
+* Remember last server hostname
+
+Version 0.7:
+* Re-autotoolization and re-internationalization
+* pt_BR locales
+* Notification area icon for systems with GTK+ >= 2.10
+
+Version 0.6:
+* Internationalization support
+* New logo
