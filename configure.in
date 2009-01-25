@@ -19,10 +19,7 @@ AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([gethostname mkdir])
 
-AM_PATH_GTK_2_0(
-    [2.10.0],
-    [AC_DEFINE(HAVE_GTK_2_10,,[GTK+ >= 2.10 is present])],
-    [AM_PATH_GTK_2_0([2.6.0],,[AC_MSG_ERROR(GTK+ >= 2.6.0 not installed.)])])
+PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= 2.6.0])
 
 AM_GNU_GETTEXT_VERSION([0.16])
 AM_GNU_GETTEXT([external])
