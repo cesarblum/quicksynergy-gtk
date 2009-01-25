@@ -55,7 +55,7 @@ void load_config(qs_state_t *state) {
                     state->synergys_path = strdup(value);
                 } else if(!strcmp(option, "SynergycPath")) {
                     state->synergyc_path = strdup(value);
-                } else if(!strcmp(option, "Screename")) {
+                } else if(!strcmp(option, "ScreenName")) {
                     state->screen_name = strdup(value);
                 }
             }
