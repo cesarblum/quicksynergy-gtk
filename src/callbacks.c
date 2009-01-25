@@ -132,7 +132,7 @@ void about_button_clicked(GtkWidget *widget, gpointer data) {
 void start_button_clicked(GtkWidget *widget, gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
     const char *env_home = getenv("HOME");
-    char *filename, *hostname;
+    char *filename;
     int status;
     
     if(!state->running) {

@@ -56,7 +56,6 @@ int main(int argc, char **argv) {
     GtkWidget *hbox;
     GtkWidget *page;
     GtkWidget *page_label;
-    GtkWidget *sep;
     GtkWidget *about_button;
     GtkWidget *start_button;
     GtkWidget *close_button;
