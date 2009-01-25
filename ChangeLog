@@ -1,18 +1,48 @@
+2009-01-25  Cesar L. B. Silveira <cesarbs@gmail.com>
+		
+		* callbacks.c: new entry_changed_cb callback for updating a
+		pointer with the entry's contents every time it changes
+		
+		* callbacks.c: use qs_state_t data in callbacks
+		
+		* callbacks.h: added entry_changed_cb function prototype
+		
+		* main.c: removed main window separator widget
+		
+		* synergy_config.c: use qs_state_t structure when loading and
+		saving configuration options
+		
+		* ui.c: store and update application information in qs_state_t
+		structure
+		
+		* ui.c: removed above_entry, below_entry, left_entry and
+		right_entry global variables
+		
+		* ui.h: new qs_state_t structure for storage of all relevant
+		application data
+		
+		* Store application state information in qs_state_t structure.
+
 2009-01-23  Cesar L. B. Silveira <cesarbs@gmail.com>
 
-		* Set spacing between widgets according to GNOME Human Interface
-		Guidelines
-		* New "Settings" tab for setting synergys and synergyc paths and
-		screen name for client mode
-		* Updated copyright years on source file headings
-		* Updated copyright years in about dialog
+		* callbacks.c: updated copyright years in about dialog
+		
 		* main.c: moved most user interface-related code to new file ui.c
+		
+		* ui.c: set spacing between widgets according to GNOME Human
+		Interface Guidelines
+		
+		* ui.c: new "Settings" tab for setting synergys and synergyc paths
+		and screen name for client mode
+		
+		* *.c, *.h: updated copyright years in license notice
 
 2008-07-28  Cesar L. B. Silveira <cesarbs@gmail.com>
 
 		* src/callbacks.c: fixed potential segmentation faults
 		when loading/saving configuration files (patch submitted by
 		Jérémie Corbier)
+		
 		* src/synergy_config.c: fixed potential segmentation faults
 		when loading/saving configuration files (patch submitted by
 		Jérémie Corbier)
@@ -20,26 +50,36 @@
 2008-07-10  Cesar L. B. Silveira <cesarbs@gmail.com>
 
 		* po/pt_BR.po: removed unused strings
+		
 		* po/quicksynergy.pot: re-generated template
+		
 		* src/callbacks.c: removed KeepRunning option and
 		replaced GtkAboutDialog creation by call to
 		gtk_show_about_dialog()
+		
 		* src/callbacks.h: removed KeepRunning option
+		
 		* src/main.c: set window icon, removed Settings
 		page from GtkNotebook and removed detection of
 		already-running synergy processes
+		
 		* src/synergy_config.c: removed KeepRunning option
 		and added Host option to remember the last server
 		hostname used in client ("Use") mode
+		
 		* Added THANKS file
+		
 		* Removed src/proc.c, src/proc.h, src/screen_entry.c
 		and screen_entry source files
+		
 		* Updated copyright years in source files
+		
 		* Minor updates in README file
 
 2007-07-24  Cesar L. B. Silveira  <cesarbs@gmail.com>
 		
 		* src/Makefile.am (EXTRA_DIST): added intl.h
+		
 		* src/logo/Makefile.am (EXTRA_DIST): added qslogo.png
 
 2007-07-15  Cesar L. B. Silveira  <cesarbs@gmail.com>
