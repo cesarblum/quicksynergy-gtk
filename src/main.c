@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
     GtkWidget *check_button;
     GtkWidget *image;
     GtkWidget *label;
-#ifdef HAVE_GTK_2_10
+#if GTK_CHECK_VERSION(2,10,0)
     GtkStatusIcon *status_icon;
 #endif
     pid_t pid = 0;
@@ -131,7 +131,7 @@ int main(int argc, char **argv) {
     /* load previous configuration */
     load_config();
 
-#ifdef HAVE_GTK_2_10
+#if GTK_CHECK_VERSION(2,10,0)
     status_icon = gtk_status_icon_new_from_pixbuf(make_logo());
     
     gtk_status_icon_set_visible(status_icon, TRUE);

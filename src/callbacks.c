@@ -30,7 +30,7 @@
 #include "synergy_config.h"
 #include "intl.h"
 
-#ifdef HAVE_GTK_2_10
+#if GTK_CHECK_VERSION(2,10,0)
 static GtkUIManager *ui_manager = NULL;
 static GtkActionGroup *action_group;
 
@@ -181,7 +181,7 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
     }
 }
 
-#ifdef HAVE_GTK_2_10
+#if GTK_CHECK_VERSION(2,10,0)
 void quicksynergy_quit(GtkWidget *widget, gpointer data) {
     if(synergy_running) {
         kill(pid, SIGTERM);
@@ -225,7 +225,7 @@ gboolean delete_event(GtkWidget *widget, GdkEvent *event, gpointer data) {
 }
 #endif
 
-#ifdef HAVE_GTK_2_10
+#if GTK_CHECK_VERSION(2,10,0)
 void show_main_window(GtkWidget *widget, gpointer data) {
     gtk_widget_show_all(main_window);
     

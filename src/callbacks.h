@@ -33,7 +33,7 @@ void about_button_clicked(GtkWidget *widget, gpointer data);
 void start_button_clicked(GtkWidget *widget, gpointer data);
 void close_button_clicked(GtkWidget *widget, gpointer data);
 gboolean delete_event(GtkWidget *widget, GdkEvent *event, gpointer user_data);
-#ifdef HAVE_GTK_2_10
+#if GTK_CHECK_VERSION(2,10,0)
 void quicksynergy_quit(GtkWidget *widget, gpointer data);
 void show_main_window(GtkWidget *widget, gpointer data);
 void status_icon_popup(GtkStatusIcon *status_icon, guint button, guint activate_time, gpointer user_data);
