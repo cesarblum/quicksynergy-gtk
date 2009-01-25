@@ -24,11 +24,10 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include "synergy_config.h"
+#include "ui.h"
 #include "intl.h"
 
-extern GtkWidget *above_entry, *below_entry, *left_entry, *right_entry, *hostname_entry;
-
-void load_config() {
+void load_config(qs_state_t *state) {
     const char *env_home = getenv("HOME");
     char *filename, option[16], value[32];
     FILE *f;
@@ -42,27 +41,29 @@ void load_config() {
     if((f = fopen(filename, "r"))) {
         do {
             if(fscanf(f, "%s%s", option, value) != EOF) {
-                if(!strcmp(option, "Above"))
-                    gtk_entry_set_text(
-                            GTK_ENTRY(above_entry), value);
-                else if(!strcmp(option, "Below"))
-                    gtk_entry_set_text(
-                            GTK_ENTRY(below_entry), value);
-                else if(!strcmp(option, "Left"))
-                    gtk_entry_set_text(
-                            GTK_ENTRY(left_entry), value);
-                else if(!strcmp(option, "Right"))
-                    gtk_entry_set_text(
-                            GTK_ENTRY(right_entry), value);
-                else if(!strcmp(option, "Host"))
-                    gtk_entry_set_text(
-                            GTK_ENTRY(hostname_entry), value);
+                if(!strcmp(option, "Above")) {
+                    state->above = strdup(value);
+                } else if(!strcmp(option, "Below")) {
+                    state->below = strdup(value);
+                } else if(!strcmp(option, "Left")) {
+                    state->left = strdup(value);
+                } else if(!strcmp(option, "Right")) {
+                    state->right = strdup(value);
+                } else if(!strcmp(option, "Host")) {
+                    state->hostname = strdup(value);
+                } else if(!strcmp(option, "SynergysPath")) {
+                    state->synergys_path = strdup(value);
+                } else if(!strcmp(option, "SynergycPath")) {
+                    state->synergyc_path = strdup(value);
+                } else if(!strcmp(option, "Screename")) {
+                    state->screen_name = strdup(value);
+                }
             }
         } while(!feof(f));
     }
 }
 
-void save_config() {
+void save_config(qs_state_t *state) {
     const char *env_home = getenv("HOME");
     char *filename;
     FILE *f;
@@ -84,28 +85,29 @@ void save_config() {
     
     f = fopen(filename, "w");
     
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(above_entry)), _("Above")) &&
-       strcmp(gtk_entry_get_text(GTK_ENTRY(above_entry)), ""))
-        fprintf(f, "Above %s\n", gtk_entry_get_text(GTK_ENTRY(above_entry)));
+    if(strcmp(state->above, _("Above")) && strcmp(state->above, ""))
+        fprintf(f, "Above %s\n", state->above);
 
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(below_entry)), _("Below")) &&
-       strcmp(gtk_entry_get_text(GTK_ENTRY(below_entry)), ""))
-        fprintf(f, "Below %s\n", gtk_entry_get_text(GTK_ENTRY(below_entry)));
+    if(strcmp(state->below, _("Below")) && strcmp(state->below, ""))
+        fprintf(f, "Below %s\n", state->below);
 
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(left_entry)), _("Left")) &&
-       strcmp(gtk_entry_get_text(GTK_ENTRY(left_entry)), ""))
-        fprintf(f, "Left %s\n", gtk_entry_get_text(GTK_ENTRY(left_entry)));
+    if(strcmp(state->left, _("Left")) && strcmp(state->left, ""))
+        fprintf(f, "Left %s\n", state->left);
 
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(right_entry)), _("Right")) &&
-       strcmp(gtk_entry_get_text(GTK_ENTRY(right_entry)), ""))
-        fprintf(f, "Right %s\n", gtk_entry_get_text(GTK_ENTRY(right_entry)));
+    if(strcmp(state->right, _("Right")) && strcmp(state->right, ""))
+        fprintf(f, "Right %s\n", state->right);
 
-    fprintf(f, "Host %s\n", gtk_entry_get_text(GTK_ENTRY(hostname_entry)));
+    fprintf(f, "Host %s\n", state->hostname);
+    
+    fprintf(f, "SynergysPath %s\n", state->synergys_path);
+    fprintf(f, "SynergycPath %s\n", state->synergyc_path);
+    
+    fprintf(f, "ScreenName %s\n", state->screen_name);
     
     fclose(f);
 }
 
-void save_synergy_config() {
+void save_synergy_config(qs_state_t *state) {
     const char *env_home = getenv("HOME");
     char *filename, hostname[64];
     FILE *f;
@@ -132,17 +134,21 @@ void save_synergy_config() {
     fprintf(f, "section: screens\n");
     fprintf(f, "\t%s:\n", hostname);
     
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(above_entry)), _("Above")))
-        fprintf(f, "\t%s:\n", gtk_entry_get_text(GTK_ENTRY(above_entry)));
+    if(strcmp(state->above, _("Above"))) {
+        fprintf(f, "\t%s:\n", state->above);
+    }
     
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(below_entry)), _("Below")))
-        fprintf(f, "\t%s:\n", gtk_entry_get_text(GTK_ENTRY(below_entry)));
+    if(strcmp(state->below, _("Below"))) {
+        fprintf(f, "\t%s:\n", state->below);
+    }
     
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(left_entry)), _("Left")))
-        fprintf(f, "\t%s:\n", gtk_entry_get_text(GTK_ENTRY(left_entry)));
+    if(strcmp(state->left, _("Left"))) {
+        fprintf(f, "\t%s:\n", state->left);
+    }
     
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(right_entry)), _("Right")))
-        fprintf(f, "\t%s:\n", gtk_entry_get_text(GTK_ENTRY(right_entry)));
+    if(strcmp(state->right, _("Right"))) {
+        fprintf(f, "\t%s:\n", state->right);
+    }
     
     fprintf(f, "end\n");
     
@@ -150,36 +156,40 @@ void save_synergy_config() {
     fprintf(f, "section: links\n");
     fprintf(f, "\t%s:\n", hostname);
     
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(above_entry)), _("Above")))
-        fprintf(f, "\t\tup = %s\n", gtk_entry_get_text(GTK_ENTRY(above_entry)));
+    if(strcmp(state->above, _("Above"))) {
+        fprintf(f, "\t\tup = %s\n", state->above);
+    }
     
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(below_entry)), _("Below")))
-        fprintf(f, "\t\tdown = %s\n", gtk_entry_get_text(GTK_ENTRY(below_entry)));
+    if(strcmp(state->below, _("Below"))) {
+        fprintf(f, "\t\tdown = %s\n", state->below);
+    }
     
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(left_entry)), _("Left")))
-        fprintf(f, "\t\tleft = %s\n", gtk_entry_get_text(GTK_ENTRY(left_entry)));
+    if(strcmp(state->left, _("Left"))) {
+        fprintf(f, "\t\tleft = %s\n", state->left);
+    }
     
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(right_entry)), _("Right")))
-        fprintf(f, "\t\tright = %s\n", gtk_entry_get_text(GTK_ENTRY(right_entry)));
+    if(strcmp(state->right, _("Right"))) {
+        fprintf(f, "\t\tright = %s\n", state->right);
+    }
     
     /* client links */
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(above_entry)), _("Above"))) {
-        fprintf(f, "\t%s:\n", gtk_entry_get_text(GTK_ENTRY(above_entry)));
+    if(strcmp(state->above, _("Above"))) {
+        fprintf(f, "\t%s:\n", state->above);
         fprintf(f, "\t\tdown = %s\n", hostname);
     }
     
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(below_entry)), _("Below"))) {
-        fprintf(f, "\t%s:\n", gtk_entry_get_text(GTK_ENTRY(below_entry)));
+    if(strcmp(state->below, _("Below"))) {
+        fprintf(f, "\t%s:\n", state->below);
         fprintf(f, "\t\tup = %s\n", hostname);
     }
     
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(left_entry)), _("Left"))) {
-        fprintf(f, "\t%s:\n", gtk_entry_get_text(GTK_ENTRY(left_entry)));
+    if(strcmp(state->left, _("Left"))) {
+        fprintf(f, "\t%s:\n", state->left);
         fprintf(f, "\t\tright = %s\n", hostname);
     }
     
-    if(strcmp(gtk_entry_get_text(GTK_ENTRY(right_entry)), _("Right"))) {
-        fprintf(f, "\t%s:\n", gtk_entry_get_text(GTK_ENTRY(right_entry)));
+    if(strcmp(state->right, _("Right"))) {
+        fprintf(f, "\t%s:\n", state->right);
         fprintf(f, "\t\tleft = %s\n", hostname);
     }
     

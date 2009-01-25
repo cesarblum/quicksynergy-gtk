@@ -17,6 +17,7 @@
  */ 
 
 #include "config.h"
+#include "intl.h"
 
 #include <sys/types.h>
 #include <gtk/gtk.h>
@@ -25,46 +26,50 @@
 #include "callbacks.h"
 #include "synergy_config.h"
 #include "ui.h"
-#include "intl.h"
-
-GtkWidget *above_entry, *below_entry, *left_entry, *right_entry, *hostname_entry;
 
 GdkPixbuf *make_logo() {
     return gdk_pixbuf_new_from_inline(-1, qslogo, FALSE, NULL);
 }
 
-GtkWidget *screen_entry_new(const char *position) {
+GtkWidget *screen_entry_new(char **textp, const char *position) {
     GtkWidget *entry;
 
     entry = gtk_entry_new();
 
-    gtk_entry_set_text(GTK_ENTRY(entry), position);
+    gtk_entry_set_text(GTK_ENTRY(entry), *textp);
     gtk_entry_set_alignment(GTK_ENTRY(entry), 0.5);
     gtk_entry_set_width_chars(GTK_ENTRY(entry), 10);
 
     g_signal_connect(G_OBJECT(entry), "focus-in-event",
-    G_CALLBACK(entry_focus_in_event), (gpointer) position);
+        G_CALLBACK(entry_focus_in_event), (gpointer) position);
 
     g_signal_connect(G_OBJECT(entry), "focus-out-event",
-    G_CALLBACK(entry_focus_out_event), (gpointer) position);
+        G_CALLBACK(entry_focus_out_event), (gpointer) position);
+    
+    g_signal_connect(G_OBJECT(entry), "changed",
+        G_CALLBACK(entry_changed_cb), (gpointer) textp);
 
     return entry;
 }
 
-GtkWidget *make_server_tab() {
+GtkWidget *make_server_tab(qs_state_t *state) {
     GtkWidget *table;
     GtkWidget *image;
+    GtkWidget *above_entry;
+    GtkWidget *below_entry;
+    GtkWidget *left_entry;
+    GtkWidget *right_entry;
     
     /* build the table that will hold the server layout widgets */
     table = gtk_table_new(3, 3, TRUE);
     gtk_container_set_border_width(GTK_CONTAINER(table), 12);
     
     /* text entries for server configuration */
-    above_entry = screen_entry_new(_("Above"));
-    below_entry = screen_entry_new(_("Below"));
-    left_entry = screen_entry_new(_("Left"));
-    right_entry = screen_entry_new(_("Right"));
-
+    above_entry = screen_entry_new(&state->above, _("Above"));
+    below_entry = screen_entry_new(&state->below, _("Below"));
+    left_entry = screen_entry_new(&state->left, _("Left"));
+    right_entry = screen_entry_new(&state->right, _("Right"));
+    
     /* attach entries to table */
     gtk_table_attach_defaults(GTK_TABLE(table), above_entry, 1, 2, 0, 1);
     gtk_table_attach_defaults(GTK_TABLE(table), below_entry, 1, 2, 2, 3);
@@ -78,9 +83,10 @@ GtkWidget *make_server_tab() {
     return table;
 }
 
-GtkWidget *make_client_tab() {
+GtkWidget *make_client_tab(qs_state_t *state) {
     GtkWidget *vbox;
     GtkWidget *label;
+    GtkWidget *entry;
     
     /* client's vbox */
     vbox = gtk_vbox_new(FALSE, 6);
@@ -91,13 +97,17 @@ GtkWidget *make_client_tab() {
     gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
     
     /* entry for placing the server's hostname/IP address */
-    hostname_entry = gtk_entry_new();
-    gtk_box_pack_start(GTK_BOX(vbox), hostname_entry, FALSE, FALSE, 0);
+    entry = gtk_entry_new();
+    gtk_box_pack_start(GTK_BOX(vbox), entry, FALSE, FALSE, 0);
+
+    /* update state information when text changes */
+    g_signal_connect(G_OBJECT(entry), "changed",
+        G_CALLBACK(entry_changed_cb), (gpointer) &state->hostname);
     
     return vbox;
 }
 
-GtkWidget *make_settings_tab() {
+GtkWidget *make_settings_tab(qs_state_t *state) {
     GtkWidget *vbox_content;
     GtkWidget *vbox_section;
     GtkWidget *hbox;
@@ -140,9 +150,17 @@ GtkWidget *make_settings_tab() {
     
     entry = gtk_entry_new();
     gtk_box_pack_start(GTK_BOX(vbox), entry, TRUE, TRUE, 0);
+
+    /* update state information when text changes */
+    g_signal_connect(G_OBJECT(entry), "changed",
+        G_CALLBACK(entry_changed_cb), (gpointer) &state->synergys_path);
     
     entry = gtk_entry_new();
     gtk_box_pack_start(GTK_BOX(vbox), entry, TRUE, TRUE, 0);
+ 
+    /* update state information when text changes */
+    g_signal_connect(G_OBJECT(entry), "changed",
+        G_CALLBACK(entry_changed_cb), (gpointer) &state->synergyc_path);
     
     vbox = gtk_vbox_new(TRUE, 0);
     gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
@@ -173,6 +191,10 @@ GtkWidget *make_settings_tab() {
     
     entry = gtk_entry_new();
     gtk_box_pack_start(GTK_BOX(hbox), entry, TRUE, TRUE, 0);
+    
+    /* update state information when text changes */
+    g_signal_connect(G_OBJECT(entry), "changed",
+        G_CALLBACK(entry_changed_cb), (gpointer) &state->screen_name);
 
     return vbox_content;
 }

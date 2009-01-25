@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <stdlib.h>
 #include <sys/types.h>
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -31,8 +32,24 @@ GtkWidget *vbox0;
 
 GtkWidget *main_window;
 GtkWidget *notebook;
-extern GtkWidget *above_entry, *below_entry, *left_entry, *right_entry, *hostname_entry;
 int synergy_running = 0;
+
+qs_state_t *qs_state_new() {
+    qs_state_t *state;
+    
+    state = (qs_state_t *) malloc(sizeof(qs_state_t));
+    state->above = _("Above");
+    state->below = _("Below");
+    state->left = _("Left");
+    state->right = _("Right");
+    state->hostname = "";
+    state->synergys_path = "";
+    state->synergyc_path = "";
+    state->screen_name = "";
+    state->running = 0;
+    
+    return state;
+}
 
 int main(int argc, char **argv) {
     GtkWidget *vbox;
@@ -50,6 +67,7 @@ int main(int argc, char **argv) {
     GtkStatusIcon *status_icon;
 #endif
     pid_t pid = 0;
+    qs_state_t *state;
 
 #ifdef ENABLE_NLS
     setlocale (LC_ALL, "");
@@ -61,6 +79,12 @@ int main(int argc, char **argv) {
     /* initialize GTK */
     gtk_init(&argc, &argv);
     
+    /* initialize applicatin state information structure */
+    state = qs_state_new();
+    
+    /* load previous configuration */
+    load_config(state);
+    
     /* build the main window */
     main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(main_window), "QuickSynergy");
@@ -68,7 +92,7 @@ int main(int argc, char **argv) {
             GTK_WIN_POS_CENTER);
     gtk_window_set_resizable(GTK_WINDOW(main_window), FALSE);
     gtk_container_set_border_width(GTK_CONTAINER(main_window), 12);
-//    gtk_window_set_icon(main_window, make_logo());
+    gtk_window_set_icon(main_window, make_logo());
     
     /* main window events */
     g_signal_connect(G_OBJECT(main_window), "delete_event",
@@ -85,17 +109,17 @@ int main(int argc, char **argv) {
     gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
     
     /* add server page to the notebook */
-    page = make_server_tab();
+    page = make_server_tab(state);
     page_label = gtk_label_new(_("Share"));
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, page_label);
     
     /* add client page to notebook */
-    page = make_client_tab();
+    page = make_client_tab(state);
     page_label = gtk_label_new(_("Use"));
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, page_label);
     
     /* add settings page to notebook */
-    page = make_settings_tab();
+    page = make_settings_tab(state);
     page_label = gtk_label_new(_("Settings"));
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, page_label);
     
@@ -118,18 +142,15 @@ int main(int argc, char **argv) {
     start_button = gtk_button_new_with_label(GTK_STOCK_EXECUTE);
     gtk_button_set_use_stock(GTK_BUTTON(start_button), TRUE);
     g_signal_connect(G_OBJECT(start_button), "clicked",
-        G_CALLBACK(start_button_clicked), NULL);
+        G_CALLBACK(start_button_clicked), (gpointer) state);
     gtk_box_pack_start(GTK_BOX(hbox), start_button, TRUE, TRUE, 0); 
     
     /* close button */
     close_button = gtk_button_new_with_label(GTK_STOCK_CLOSE);
     gtk_button_set_use_stock(GTK_BUTTON(close_button), TRUE);
     g_signal_connect(G_OBJECT(close_button), "clicked",
-        G_CALLBACK(close_button_clicked), NULL);
+        G_CALLBACK(close_button_clicked), (gpointer) state);
     gtk_box_pack_start(GTK_BOX(hbox), close_button, TRUE, TRUE, 0);
-    
-    /* load previous configuration */
-    load_config();
 
 #if GTK_CHECK_VERSION(2,10,0)
     status_icon = gtk_status_icon_new_from_pixbuf(make_logo());
@@ -138,10 +159,10 @@ int main(int argc, char **argv) {
     gtk_status_icon_set_tooltip(status_icon, "QuickSynergy");
     
     g_signal_connect(G_OBJECT(status_icon), "popup-menu", 
-        G_CALLBACK(status_icon_popup), NULL);
+        G_CALLBACK(status_icon_popup), (gpointer) state);
     
     g_signal_connect(G_OBJECT(status_icon), "activate", 
-        G_CALLBACK(show_main_window), NULL);
+        G_CALLBACK(show_main_window), (gpointer) state);
 #endif
 
     /* display the main window */   

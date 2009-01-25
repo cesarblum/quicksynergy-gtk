@@ -19,10 +19,10 @@
 #ifndef SYNERGY_CONFIG_H
 #define SYNERGY_CONFIG_H
 
-#include <gtk/gtk.h>
+#include "ui.h"
 
-void load_config();
-void save_config();
-void save_synergy_config();
+void load_config(qs_state_t *state);
+void save_config(qs_state_t *state);
+void save_synergy_config(qs_state_t *state);
 
 #endif /* SYNERGY_CONFIG_H */
