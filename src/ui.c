@@ -111,10 +111,13 @@ GtkWidget *make_settings_tab(qs_state_t *state) {
     GtkWidget *vbox_content;
     GtkWidget *vbox_section;
     GtkWidget *hbox;
+    GtkWidget *hbox1;
     GtkWidget *vbox;
     GtkWidget *label;
     GtkWidget *button;
     GtkWidget *entry;
+    GtkWidget *alignment;
+    GtkWidget *image;
     
     vbox_content = gtk_vbox_new(FALSE, 18);
     gtk_container_set_border_width(GTK_CONTAINER(vbox_content), 12);
@@ -125,51 +128,42 @@ GtkWidget *make_settings_tab(qs_state_t *state) {
     
     label = gtk_label_new("");
     gtk_label_set_use_markup(GTK_LABEL(label), TRUE);
-    gtk_label_set_markup(GTK_LABEL(label), _("<b>Paths</b>"));
+    gtk_label_set_markup(GTK_LABEL(label), _("<b>Synergy path</b>"));
     gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
     gtk_box_pack_start(GTK_BOX(vbox_section), label, FALSE, FALSE, 0);
 
-    hbox = gtk_hbox_new(FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox_section), hbox, TRUE, TRUE, 0);
+    hbox1 = gtk_hbox_new(FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox_section), hbox1, TRUE, TRUE, 0);
     
-    vbox = gtk_vbox_new(TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
+    label = gtk_label_new("    ");
+    gtk_box_pack_start(GTK_BOX(hbox1), label, FALSE, FALSE, 0);
     
-    label = gtk_label_new(_("Path to synergys:"));
+    hbox = gtk_hbox_new(FALSE, 6);
+    gtk_box_pack_start(GTK_BOX(hbox1), hbox, TRUE, TRUE, 0);
+    
+    label = gtk_label_new(_("Synergy binaries path:"));
     gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-    gtk_misc_set_padding(GTK_MISC(label), 12, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-    
-    label = gtk_label_new(_("Path to synergyc:"));
-    gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-    gtk_misc_set_padding(GTK_MISC(label), 12, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-    
-    vbox = gtk_vbox_new(TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), vbox, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
     
     entry = gtk_entry_new();
-    gtk_box_pack_start(GTK_BOX(vbox), entry, TRUE, TRUE, 0);
-
-    /* update state information when text changes */
+    gtk_box_pack_start(GTK_BOX(hbox), entry, TRUE, TRUE, 0);
     g_signal_connect(G_OBJECT(entry), "changed",
         G_CALLBACK(entry_changed_cb), (gpointer) &state->synergys_path);
     
-    entry = gtk_entry_new();
-    gtk_box_pack_start(GTK_BOX(vbox), entry, TRUE, TRUE, 0);
- 
-    /* update state information when text changes */
-    g_signal_connect(G_OBJECT(entry), "changed",
-        G_CALLBACK(entry_changed_cb), (gpointer) &state->synergyc_path);
+    button = gtk_button_new();
+    gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
     
-    vbox = gtk_vbox_new(TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
+    alignment = gtk_alignment_new(0.5, 0.5, 0, 0);
+    gtk_container_add(GTK_CONTAINER(button), alignment);
     
-    button = gtk_button_new_with_label("...");
-    gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 0);
+    hbox = gtk_hbox_new(FALSE, 2);
+    gtk_container_add(GTK_CONTAINER(alignment), hbox);
     
-    button = gtk_button_new_with_label("...");
-    gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 0);
+    image = gtk_image_new_from_stock(GTK_STOCK_DIRECTORY, 4);
+    gtk_box_pack_start(GTK_BOX(hbox), image, FALSE, FALSE, 0);
+    
+    label = gtk_label_new(_("Browse..."));
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
     
     /* "Screen name" section */
     vbox_section = gtk_vbox_new(FALSE, 0);
@@ -181,18 +175,21 @@ GtkWidget *make_settings_tab(qs_state_t *state) {
     gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
     gtk_box_pack_start(GTK_BOX(vbox_section), label, FALSE, FALSE, 0);
 
-    hbox = gtk_hbox_new(FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox_section), hbox, TRUE, TRUE, 0);
+    hbox1 = gtk_hbox_new(FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox_section), hbox1, TRUE, TRUE, 0);
     
-    label = gtk_label_new(_("Set this computer's screen name:"));
+    label = gtk_label_new("    ");
+    gtk_box_pack_start(GTK_BOX(hbox1), label, FALSE, FALSE, 0);
+    
+    hbox = gtk_hbox_new(FALSE, 6);
+    gtk_box_pack_start(GTK_BOX(hbox1), hbox, TRUE, TRUE, 0);
+    
+    label = gtk_label_new(_("Use the following screen name:"));
     gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-    gtk_misc_set_padding(GTK_MISC(label), 12, 0);
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
     
     entry = gtk_entry_new();
     gtk_box_pack_start(GTK_BOX(hbox), entry, TRUE, TRUE, 0);
-    
-    /* update state information when text changes */
     g_signal_connect(G_OBJECT(entry), "changed",
         G_CALLBACK(entry_changed_cb), (gpointer) &state->screen_name);
 
