@@ -18,6 +18,8 @@
 		* ui.c: removed above_entry, below_entry, left_entry and
 		right_entry global variables
 		
+		* ui.c: re-arranged widgets in Paths section
+		
 		* ui.h: new qs_state_t structure for storage of all relevant
 		application data
 		
