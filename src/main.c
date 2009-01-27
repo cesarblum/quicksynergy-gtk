@@ -32,7 +32,6 @@ GtkWidget *vbox0;
 
 GtkWidget *main_window;
 GtkWidget *notebook;
-int synergy_running = 0;
 
 qs_state_t *qs_state_new() {
     qs_state_t *state;
