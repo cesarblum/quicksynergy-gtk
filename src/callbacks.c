@@ -54,7 +54,6 @@ pid_t pid;
 
 extern GtkWidget *main_window;
 extern GtkWidget *notebook;
-extern const guint8 qslogo[];
 
 gboolean entry_focus_in_event(
         GtkWidget *widget, GdkEventFocus *event, gpointer data) {
@@ -110,7 +109,7 @@ void about_button_clicked(GtkWidget *widget, gpointer data) {
     static const gchar *copyright =
         "Copyright \xc2\xa9 2006-2009 César L. B. Silveira, Otávio C. Cordeiro";
     
-    GdkPixbuf *logo = gdk_pixbuf_new_from_inline(-1, qslogo, FALSE, NULL);
+    GdkPixbuf *logo = make_logo();
 
     gtk_show_about_dialog(GTK_WINDOW(window),
                     "comments", _("A graphical user interface for synergy"),
