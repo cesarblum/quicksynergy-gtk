@@ -34,7 +34,7 @@ void load_config(qs_state_t *state) {
     
     chdir(home_dir);
     
-    if((f = fopen(".quicksynergy/quicksynergy.conf", "r"))) {
+    if((f = fopen(QS_CONF_DIR QS_CONF_FILE, "r"))) {
         do {
             if(fscanf(f, "%s%s", option, value) != EOF) {
                 if(!strcmp(option, "Above")) {
@@ -63,9 +63,9 @@ void save_config(qs_state_t *state) {
     
     chdir(home_dir);
     
-    mkdir(".quicksynergy", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+    mkdir(QS_CONF_DIR, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
     
-    f = fopen(".quicksynergy/quicksynergy.conf", "w");
+    f = fopen(QS_CONF_DIR QS_CONF_FILE, "w");
     
     if(strcmp(state->above, _("Above")) && strcmp(state->above, ""))
         fprintf(f, "Above %s\n", state->above);
@@ -98,9 +98,9 @@ void save_synergy_config(qs_state_t *state) {
     
     chdir(home_dir);
     
-    mkdir(".quicksynergy", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+    mkdir(QS_CONF_DIR, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
     
-    f = fopen(".quicksynergy/synergy.conf", "w");
+    f = fopen(QS_CONF_DIR QS_SYNERGY_CONF_FILE, "w");
     
     gethostname(hostname, 64);
 

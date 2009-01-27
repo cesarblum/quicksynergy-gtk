@@ -21,6 +21,10 @@
 
 #include "ui.h"
 
+#define QS_CONF_DIR             ".quicksynergy/"
+#define QS_CONF_FILE            "quicksynergy.conf"
+#define QS_SYNERGY_CONF_FILE    "synergy.conf"
+
 void load_config(qs_state_t *state);
 void save_config(qs_state_t *state);
 void save_synergy_config(qs_state_t *state);
