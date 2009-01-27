@@ -27,8 +27,7 @@ typedef struct qs_state {
     char *left;
     char *right;
     char *hostname;
-    char *synergys_path;
-    char *synergyc_path;
+    char *synergy_path;
     char *screen_name;
     int running;
 } qs_state_t;

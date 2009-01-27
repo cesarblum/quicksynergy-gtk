@@ -43,8 +43,7 @@ qs_state_t *qs_state_new() {
     state->left = _("Left");
     state->right = _("Right");
     state->hostname = "";
-    state->synergys_path = "";
-    state->synergyc_path = "";
+    state->synergy_path = "";
     state->screen_name = "";
     state->running = 0;
     

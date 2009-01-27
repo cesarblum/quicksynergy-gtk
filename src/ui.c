@@ -148,7 +148,7 @@ GtkWidget *make_settings_tab(qs_state_t *state) {
     entry = gtk_entry_new();
     gtk_box_pack_start(GTK_BOX(hbox), entry, TRUE, TRUE, 0);
     g_signal_connect(G_OBJECT(entry), "changed",
-        G_CALLBACK(entry_changed_cb), (gpointer) &state->synergys_path);
+        G_CALLBACK(entry_changed_cb), (gpointer) &state->synergy_path);
     
     button = gtk_button_new();
     gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);

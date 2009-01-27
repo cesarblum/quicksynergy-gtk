@@ -28,17 +28,13 @@
 #include "intl.h"
 
 void load_config(qs_state_t *state) {
-    const char *env_home = getenv("HOME");
-    char *filename, option[16], value[32];
+    const char *home_dir = getenv("HOME");
+    char option[16], value[32];
     FILE *f;
     
-    filename = (char *) malloc(
-        (strlen(env_home) + strlen("/.quicksynergy/quicksynergy.conf") + 1) * 
-        sizeof(char));
+    chdir(home_dir);
     
-    sprintf(filename, "%s%s", env_home, "/.quicksynergy/quicksynergy.conf");
-    
-    if((f = fopen(filename, "r"))) {
+    if((f = fopen(".quicksynergy/quicksynergy.conf", "r"))) {
         do {
             if(fscanf(f, "%s%s", option, value) != EOF) {
                 if(!strcmp(option, "Above")) {
@@ -51,10 +47,8 @@ void load_config(qs_state_t *state) {
                     state->right = strdup(value);
                 } else if(!strcmp(option, "Host")) {
                     state->hostname = strdup(value);
-                } else if(!strcmp(option, "SynergysPath")) {
-                    state->synergys_path = strdup(value);
-                } else if(!strcmp(option, "SynergycPath")) {
-                    state->synergyc_path = strdup(value);
+                } else if(!strcmp(option, "SynergyPath")) {
+                    state->synergy_path = strdup(value);
                 } else if(!strcmp(option, "ScreenName")) {
                     state->screen_name = strdup(value);
                 }
@@ -64,26 +58,14 @@ void load_config(qs_state_t *state) {
 }
 
 void save_config(qs_state_t *state) {
-    const char *env_home = getenv("HOME");
-    char *filename;
+    const char *home_dir = getenv("HOME");
     FILE *f;
     
-    filename = (char *) malloc(
-        (strlen(env_home) + strlen("/.quicksynergy") + 1) * sizeof(char));
-        
-    sprintf(filename, "%s%s", env_home, "/.quicksynergy");
-
-    mkdir(filename, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+    chdir(home_dir);
     
-    free(filename);
+    mkdir(".quicksynergy", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
     
-    filename = (char *) malloc(
-        (strlen(env_home) + strlen("/.quicksynergy/quicksynergy.conf") + 1) * 
-        sizeof(char));
-    
-    sprintf(filename, "%s%s", env_home, "/.quicksynergy/quicksynergy.conf");
-    
-    f = fopen(filename, "w");
+    f = fopen(".quicksynergy/quicksynergy.conf", "w");
     
     if(strcmp(state->above, _("Above")) && strcmp(state->above, ""))
         fprintf(f, "Above %s\n", state->above);
@@ -97,37 +79,28 @@ void save_config(qs_state_t *state) {
     if(strcmp(state->right, _("Right")) && strcmp(state->right, ""))
         fprintf(f, "Right %s\n", state->right);
 
-    fprintf(f, "Host %s\n", state->hostname);
+    if(strcmp(state->hostname, ""))
+        fprintf(f, "Host %s\n", state->hostname);
     
-    fprintf(f, "SynergysPath %s\n", state->synergys_path);
-    fprintf(f, "SynergycPath %s\n", state->synergyc_path);
+    if(strcmp(state->synergy_path, ""))
+        fprintf(f, "SynergyPath %s\n", state->synergy_path);
     
-    fprintf(f, "ScreenName %s\n", state->screen_name);
+    if(strcmp(state->screen_name, ""))
+        fprintf(f, "ScreenName %s\n", state->screen_name);
     
     fclose(f);
 }
 
 void save_synergy_config(qs_state_t *state) {
-    const char *env_home = getenv("HOME");
-    char *filename, hostname[64];
+    const char *home_dir = getenv("HOME");
+    char hostname[64];
     FILE *f;
     
-    filename = (char *) malloc(
-        (strlen(env_home) + strlen("/.quicksynergy") + 1) * sizeof(char));
+    chdir(home_dir);
     
-    sprintf(filename, "%s%s", env_home, "/.quicksynergy");
-
-    mkdir(filename, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+    mkdir(".quicksynergy", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
     
-    free(filename);
-    
-    filename = (char *) malloc(
-        (strlen(env_home) + strlen("/.quicksynergy/synergy.conf") + 1) * 
-        sizeof(char));
-    
-    sprintf(filename, "%s%s", env_home, "/.quicksynergy/synergy.conf");
-    
-    f = fopen(filename, "w");
+    f = fopen(".quicksynergy/synergy.conf", "w");
     
     gethostname(hostname, 64);
 
