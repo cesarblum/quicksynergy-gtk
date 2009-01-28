@@ -1,38 +1,33 @@
-This is the README file for QuickSynergy, version 0.8 for Linux.
+General Information
+===================
 
-QuickSynergy is a GUI (Graphical User Interface) for synergy, an
-application that allows the user to share his/her mouse and keyboard
-between two or more computers over a simple TCP/IP network. This is
-also known as "software KVM", altough in true KVM the monitor is also
-shared.
+This is QuickSynergy version 0.8. QuickSynergy is a simple graphical user
+interface for synergy, an application that allows you to share
+your mouse and keyboard with other computers over a TCP/IP network.
+This is also known as "software KVM", altough in true
+KVM the monitor is also shared.
 
-The motivation to write QuickSynergy was the fact that there was no
-graphical interface for the Linux and Mac versions of synergy. Since
-many users do not enjoy writting configuration files by hand, we
-decided to make a simple graphical tool that would do such job.
+QuickSynergy does not aim to provide a full-featured user interface.
+Instead, it provides an interface that is as simple as possible and that
+allows users to promptly get synergy running on their machines.
 
-It is important to note that the aim of QuickSynergy is not to
-provide a full-featured user interface, but only an interface that is
-as simple as possible and that allows users to quickly get synergy
-running on their machines.
+Installation
+============
 
-Usage:
-- To share the machine's mouse and keyboard, select the Share
-  tab on the main window and type the hostnames of the other machines in
-  the text boxes.
-    
-- To use another machine's mouse and keyboard, select the Use
-  tab and type the hostname or the IP address of the machine whose
-  mouse and keyboard are being shared.
-    
-- After configuration, click the Start button.
-  If you want to change anything, click it again (it is going to be 
-  labeled "Stop" this time), make any changes you want, and click 
-  the Start button again.
-    
-Also note that you need to have synergy installed on your system before 
-you can use QuickSynergy. The Linux version does not come with synergy 
-bundled with it.
+See the INSTALL file in this package.
 
-Bug reports may be sent directly to the authors of the program. Contact 
-information may be found in the AUTHORS file.
+How to report bugs
+==================
+
+Send your bug reports to cesarbs@gmail.com. The following information
+should be provided:
+
+* The version of QuickSynergy you are using.
+
+* The version of synergy you are using.
+
+* The operating system on which QuickSynergy crashed (if Linux, also inform
+  the distribution).
+  
+* The steps required to reproduce the bug, or the situation in which it
+  occurred.
