@@ -8,8 +8,7 @@
 		* synergy_config.c: added macros for configuration file and
 		directory names.
 		
-		* synergy_config.h: added macros for configuration file and
-		directory names.
+		* synergy_config.h: likewise.
 		
 		* ui.c: chdir() to home directory instead of allocating full
 		file name; do not write blank config options.
@@ -33,14 +32,9 @@
 		saving configuration options
 		
 		* ui.c: store and update application information in qs_state_t
-		structure
-		
-		* ui.c: removed above_entry, below_entry, left_entry and
-		right_entry global variables
-		
-		* ui.c: re-arranged widgets in Paths section
-		
-		* ui.h: new qs_state_t structure for storage of all relevant
+		structure; removed above_entry, below_entry, left_entry and
+		right_entry global variables; re-arranged widgets in Paths
+		section; new qs_state_t structure for storage of all relevant
 		application data
 		
 		* Store application state information in qs_state_t structure.
@@ -57,7 +51,21 @@
 		* ui.c: new "Settings" tab for setting synergys and synergyc paths
 		and screen name for client mode
 		
-		* *.c, *.h: updated copyright years in license notice
+		* callbacks.c: updated copyright years in license notice
+		
+		* callbacks.h: likewise.
+		
+		* intl.h: likewise.
+		
+		* main.c: likewise.
+		
+		* synergy_config.c: likewise.
+		
+		* synergy_config.h: likewise.
+		
+		* ui.c: likewise.
+		
+		* ui.h: likewise.
 
 2008-07-28  Cesar L. B. Silveira <cesarbs@gmail.com>
 

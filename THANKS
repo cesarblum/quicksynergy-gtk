@@ -4,7 +4,14 @@ Thanks to:
 
     Jérémie Corbier for Debian and Ubuntu packaging.
 
-    Thomas Langewouters for suggestions.
+    Thomas Langewouters for window icon code.
+    
+    Avadh Patel for screen name patch.
+    
+    Stephan Kleine for OpenSUSE packaging and patches.
+    
+    All the people who have submitted bug reports.
 
-Also see the AUTHORS
+    All the translators (run 'grep -e ^\"Last-Translator: po/*.po').
 
+See also the AUTHORS and ChangeLog files.

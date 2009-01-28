@@ -1,6 +1,6 @@
 QuickSynergy NEWS
 
-Copyright (C) 2006, 2007, 2008 Cesar L. B. Silveira, Otavio C. Cordeiro
+Copyright (C) 2006, 2007, 2008, 2009 Cesar L. B. Silveira, Otavio C. Cordeiro
 
 Version 0.8.1:
 * Fixed potential segmentation faults when loading/saving configuration
