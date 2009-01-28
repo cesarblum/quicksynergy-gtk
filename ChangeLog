@@ -1,3 +1,23 @@
+2009-01-26  Cesar L. B. Silveira <cesarbs@gmail.com>
+		
+		* callbacks.c: replaced external reference to qslogo by call
+		to make_logo().
+		
+		* main.c: removed unused synergy_running global variable.
+		
+		* synergy_config.c: added macros for configuration file and
+		directory names.
+		
+		* synergy_config.h: added macros for configuration file and
+		directory names.
+		
+		* ui.c: chdir() to home directory instead of allocating full
+		file name; do not write blank config options.
+		
+    	* ui.h: single path for synergy binaries in qs_state_t structure.
+		
+		* Added logo SVG file to src/logo.
+
 2009-01-25  Cesar L. B. Silveira <cesarbs@gmail.com>
 		
 		* callbacks.c: new entry_changed_cb callback for updating a
