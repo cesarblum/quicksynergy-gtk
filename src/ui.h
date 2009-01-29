@@ -19,16 +19,17 @@
 #ifndef UI_H
 #define UI_H
 
+#include <glib.h>
 #include <gtk/gtk.h>
 
 typedef struct qs_state {
-    char *above;
-    char *below;
-    char *left;
-    char *right;
-    char *hostname;
-    char *synergy_path;
-    char *screen_name;
+    gchar *above;
+    gchar *below;
+    gchar *left;
+    gchar *right;
+    gchar *hostname;
+    gchar *synergy_path;
+    gchar *screen_name;
     int running;
 } qs_state_t;
 
