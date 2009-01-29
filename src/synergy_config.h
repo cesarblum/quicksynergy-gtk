@@ -25,7 +25,7 @@
 #define QS_CONF_FILE            "quicksynergy.conf"
 #define QS_SYNERGY_CONF_FILE    "synergy.conf"
 
-void load_config(qs_state_t *state);
+qs_state_t *load_config(void);
 void save_config(qs_state_t *state);
 void save_synergy_config(qs_state_t *state);
 

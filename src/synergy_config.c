@@ -27,16 +27,28 @@
 #include "ui.h"
 #include "intl.h"
 
-void load_config(qs_state_t *state) {
+qs_state_t *load_config() {
     const char *home_dir = getenv("HOME");
     char option[16], value[32];
-    FILE *f;
+    qs_state_t *state;
+    FILE *fp;
+    
+    state = (qs_state_t *) malloc(sizeof(qs_state_t));
+    
+    state->above = _("Above");
+    state->below = _("Below");
+    state->left = _("Left");
+    state->right = _("Right");
+    state->hostname = "";
+    state->synergy_path = "/usr/bin";
+    state->screen_name = "";
+    state->running = 0;
     
     chdir(home_dir);
     
-    if((f = fopen(QS_CONF_DIR QS_CONF_FILE, "r"))) {
+    if((fp = fopen(QS_CONF_DIR QS_CONF_FILE, "r"))) {
         do {
-            if(fscanf(f, "%s%s", option, value) != EOF) {
+            if(fscanf(fp, "%s%s", option, value) != EOF) {
                 if(!strcmp(option, "Above")) {
                     state->above = strdup(value);
                 } else if(!strcmp(option, "Below")) {
@@ -53,8 +65,10 @@ void load_config(qs_state_t *state) {
                     state->screen_name = strdup(value);
                 }
             }
-        } while(!feof(f));
+        } while(!feof(fp));
     }
+    
+    return state;
 }
 
 void save_config(qs_state_t *state) {
