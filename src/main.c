@@ -33,22 +33,6 @@ GtkWidget *vbox0;
 GtkWidget *main_window;
 GtkWidget *notebook;
 
-qs_state_t *qs_state_new() {
-    qs_state_t *state;
-    
-    state = (qs_state_t *) malloc(sizeof(qs_state_t));
-    state->above = _("Above");
-    state->below = _("Below");
-    state->left = _("Left");
-    state->right = _("Right");
-    state->hostname = "";
-    state->synergy_path = "";
-    state->screen_name = "";
-    state->running = 0;
-    
-    return state;
-}
-
 int main(int argc, char **argv) {
     GtkWidget *vbox;
     GtkWidget *hbox;
@@ -76,11 +60,8 @@ int main(int argc, char **argv) {
     /* initialize GTK */
     gtk_init(&argc, &argv);
     
-    /* initialize applicatin state information structure */
-    state = qs_state_new();
-    
     /* load previous configuration */
-    load_config(state);
+    state = load_config();
     
     /* build the main window */
     main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
