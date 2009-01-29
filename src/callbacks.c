@@ -120,6 +120,8 @@ void about_button_clicked(GtkWidget *widget, gpointer data) {
         "Thomas Langewouters (patches and suggestions)",
         "Magnus Boman (patches)",
         "Todd Wease (patches)",
+        "Avadh Patel (screen name patch)",
+        "Stephan Kleine (openSUSE packaging and patches)",
         NULL
     };
     
