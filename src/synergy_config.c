@@ -75,6 +75,8 @@ qs_state_t *load_config() {
         (g_key_file_has_key(key_file, "Settings", "SynergyPath", NULL) ?
          g_key_file_get_value(key_file, "Settings", "SynergyPath", NULL) :
          "/usr/bin");
+    
+    state->running = 0;
 
     g_key_file_free(key_file);
 
