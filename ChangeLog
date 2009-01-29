@@ -1,3 +1,25 @@
+2009-01-28  Cesar L. B. Silveira <cesarbs@gmail.com>
+
+		* src/callbacks.c: implemented SynergyPath functionality.
+		
+		* src/callbacks.h: likewise.
+		
+		* src/main.c: removed allocation of qs_state_t structure.
+		
+		* src/synergy_config.c: load_config() returns qs_state_t
+		structure with default values and information read from
+		configuration file.
+		
+		* src/synergy_config.h: likewise.
+		
+		* src/ui.c: moved screen name config field to Use tab and
+		changed appearance of Settings tab (looks more like the Use tab
+		now).
+
+		* src/ui.h: moved char* fields to gchar*.
+
+		* THANKS: fixed openSUSE spelling.
+
 2009-01-26  Cesar L. B. Silveira <cesarbs@gmail.com>
 		
 		* callbacks.c: replaced external reference to qslogo by call
