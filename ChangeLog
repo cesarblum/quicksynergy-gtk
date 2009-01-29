@@ -22,38 +22,38 @@
 
 2009-01-26  Cesar L. B. Silveira <cesarbs@gmail.com>
 		
-		* callbacks.c: replaced external reference to qslogo by call
+		* src/callbacks.c: replaced external reference to qslogo by call
 		to make_logo().
 		
-		* main.c: removed unused synergy_running global variable.
+		* src/main.c: removed unused synergy_running global variable.
 		
-		* synergy_config.c: added macros for configuration file and
+		* src/synergy_config.c: added macros for configuration file and
 		directory names.
 		
-		* synergy_config.h: likewise.
+		* src/synergy_config.h: likewise.
 		
-		* ui.c: chdir() to home directory instead of allocating full
+		* src/ui.c: chdir() to home directory instead of allocating full
 		file name; do not write blank config options.
 		
-    	* ui.h: single path for synergy binaries in qs_state_t structure.
+    	* src/ui.h: single path for synergy binaries in qs_state_t structure.
 		
 		* Added logo SVG file to src/logo.
 
 2009-01-25  Cesar L. B. Silveira <cesarbs@gmail.com>
 		
-		* callbacks.c: new entry_changed_cb callback for updating a
+		* src/callbacks.c: new entry_changed_cb callback for updating a
 		pointer with the entry's contents every time it changes
 		
-		* callbacks.c: use qs_state_t data in callbacks
+		* src/callbacks.c: use qs_state_t data in callbacks
 		
-		* callbacks.h: added entry_changed_cb function prototype
+		* src/callbacks.h: added entry_changed_cb function prototype
 		
-		* main.c: removed main window separator widget
+		* src/main.c: removed main window separator widget
 		
-		* synergy_config.c: use qs_state_t structure when loading and
+		* src/synergy_config.c: use qs_state_t structure when loading and
 		saving configuration options
 		
-		* ui.c: store and update application information in qs_state_t
+		* src/ui.c: store and update application information in qs_state_t
 		structure; removed above_entry, below_entry, left_entry and
 		right_entry global variables; re-arranged widgets in Paths
 		section; new qs_state_t structure for storage of all relevant
@@ -63,31 +63,31 @@
 
 2009-01-23  Cesar L. B. Silveira <cesarbs@gmail.com>
 
-		* callbacks.c: updated copyright years in about dialog
+		* src/callbacks.c: updated copyright years in about dialog
 		
-		* main.c: moved most user interface-related code to new file ui.c
+		* src/main.c: moved most user interface-related code to new file ui.c
 		
-		* ui.c: set spacing between widgets according to GNOME Human
+		* src/ui.c: set spacing between widgets according to GNOME Human
 		Interface Guidelines
 		
-		* ui.c: new "Settings" tab for setting synergys and synergyc paths
+		* src/ui.c: new "Settings" tab for setting synergys and synergyc paths
 		and screen name for client mode
 		
-		* callbacks.c: updated copyright years in license notice
+		* src/callbacks.c: updated copyright years in license notice
 		
-		* callbacks.h: likewise.
+		* src/callbacks.h: likewise.
 		
-		* intl.h: likewise.
+		* src/intl.h: likewise.
 		
-		* main.c: likewise.
+		* src/main.c: likewise.
 		
-		* synergy_config.c: likewise.
+		* src/synergy_config.c: likewise.
 		
-		* synergy_config.h: likewise.
+		* src/synergy_config.h: likewise.
 		
-		* ui.c: likewise.
+		* src/ui.c: likewise.
 		
-		* ui.h: likewise.
+		* src/ui.h: likewise.
 
 2008-07-28  Cesar L. B. Silveira <cesarbs@gmail.com>
 
@@ -159,13 +159,13 @@
 
 2007-05-31  Cesar L. B. Silveira  <cesarbs@gmail.com>
 
-		* proc.c: applied patch provided by Jeremie Corbier.
+		* src/proc.c: applied patch provided by Jeremie Corbier.
 		This frees the array of dirent allocated by scandir in
 		get_pid_by_name.
 
 2007-05-12  Cesar L. B. Silveira  <cesarbs@gmail.com>
 
-		* callbacks.c: synergy processes are now killed
+		* src/callbacks.c: synergy processes are now killed
 		using the killall system command.
 		* New logo
 
@@ -179,9 +179,9 @@
 		to hold the hostname/IP address of a client screen when
 		setting up a synergy server.
 
-		* main.c: Former Server tab is now the Share tab.
+		* src/main.c: Former Server tab is now the Share tab.
 
-		* main.c: Former Client tab if now the Use tab.
+		* src/main.c: Former Client tab if now the Use tab.
 
 2007-03-10  Sylvain Cresto  <scresto@gmail.com>
 
@@ -193,18 +193,18 @@
 
 		* configure.in: added some missing tests.
 
-		* main.c: new "Settings" tab.
+		* src/main.c: new "Settings" tab.
 
-		* main.c: added a few comments to the code.
+		* src/main.c: added a few comments to the code.
 
-		* callbacks.c: program behaviour redefined. Now the
+		* src/callbacks.c: program behaviour redefined. Now the
 		GtkNotebook gets disabled, not specific widgets acoording
 		to what the user has run (server or client).
 
-		* callbacks.c: synergy process control code rewritten.
+		* src/callbacks.c: synergy process control code rewritten.
 		No more zombie processes :-)
 
-		* config.c: functions load and save the new KeepRunning 
+		* src/config.c: functions load and save the new KeepRunning 
 		option.
 
 		* new application logo.
