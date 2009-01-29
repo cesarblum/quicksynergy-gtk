@@ -1,6 +1,6 @@
-AC_INIT([QuickSynergy], [0.8.2], [cesarbs@gmail.com])
+AC_INIT([QuickSynergy], [0.9.0], [cesarbs@gmail.com])
 
-AM_INIT_AUTOMAKE(quicksynergy, 0.8.2)
+AM_INIT_AUTOMAKE(quicksynergy, 0.9.0)
 
 AC_CONFIG_HEADER(config.h)
 AC_CONFIG_SRCDIR([src/main.c])
