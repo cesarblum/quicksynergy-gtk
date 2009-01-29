@@ -4,10 +4,16 @@
 		
 		* configure.in: Changed version to 0.9.0.
 		
-		* main.c: Convert main_window to GtkWindow on call to
-		gtk_window_set_icon().
+		* src/callbacks.c: Disable Execute button when Settings
+		tab is active.
 		
-		* synergy_config.c: Store configuration in GLib key-value file.
+		* src/callbacks.h: Likewise.
+		
+		* src/main.c: Convert main_window to GtkWindow on call to
+		gtk_window_set_icon(). Disable Execute button when Settings
+		tab is active.
+		
+		* src/synergy_config.c: Store configuration in GLib key-value file.
 
 2009-01-28  Cesar L. B. Silveira <cesarbs@gmail.com>
 

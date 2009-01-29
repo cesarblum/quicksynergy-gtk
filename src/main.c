@@ -83,6 +83,8 @@ int main(int argc, char **argv) {
     
     /* Server/Client/Settings notebook */
     notebook = gtk_notebook_new();
+    g_signal_connect(G_OBJECT(notebook), "switch-page",
+        G_CALLBACK(notebook_page_switched), NULL);
     gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
     
     /* add server page to the notebook */
