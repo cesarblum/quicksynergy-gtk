@@ -54,6 +54,7 @@ static GtkActionEntry popup_menu_actions[] = {
 
 extern GtkWidget *main_window;
 extern GtkWidget *notebook;
+extern GtkWidget *start_button;
 
 gboolean entry_focus_in_event(
         GtkWidget *widget, GdkEventFocus *event, gpointer data) {

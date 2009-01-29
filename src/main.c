@@ -32,6 +32,7 @@ GtkWidget *vbox0;
 
 GtkWidget *main_window;
 GtkWidget *notebook;
+GtkWidget *start_button;
 
 int main(int argc, char **argv) {
     GtkWidget *vbox;
@@ -39,7 +40,6 @@ int main(int argc, char **argv) {
     GtkWidget *page;
     GtkWidget *page_label;
     GtkWidget *about_button;
-    GtkWidget *start_button;
     GtkWidget *close_button;
     GtkWidget *check_button;
     GtkWidget *image;
