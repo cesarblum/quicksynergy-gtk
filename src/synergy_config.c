@@ -41,7 +41,7 @@ qs_state_t *load_config() {
     state->right = _("Right");
     state->hostname = "";
     state->synergy_path = "/usr/bin";
-    state->screen_name = "";
+    state->client_name = "";
     state->running = 0;
     
     chdir(home_dir);
@@ -61,8 +61,8 @@ qs_state_t *load_config() {
                     state->hostname = strdup(value);
                 } else if(!strcmp(option, "SynergyPath")) {
                     state->synergy_path = strdup(value);
-                } else if(!strcmp(option, "ScreenName")) {
-                    state->screen_name = strdup(value);
+                } else if(!strcmp(option, "ClientName")) {
+                    state->client_name = strdup(value);
                 }
             }
         } while(!feof(fp));
@@ -99,8 +99,8 @@ void save_config(qs_state_t *state) {
     if(strcmp(state->synergy_path, ""))
         fprintf(f, "SynergyPath %s\n", state->synergy_path);
     
-    if(strcmp(state->screen_name, ""))
-        fprintf(f, "ScreenName %s\n", state->screen_name);
+    if(strcmp(state->client_name, ""))
+        fprintf(f, "ClientName %s\n", state->client_name);
     
     fclose(f);
 }
