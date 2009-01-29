@@ -3,6 +3,9 @@
 		* configure: Changed version to 0.9.0.
 		
 		* configure.in: Changed version to 0.9.0.
+		
+		* main.c: Convert main_window to GtkWindow on call to
+		gtk_window_set_icon().
 
 2009-01-28  Cesar L. B. Silveira <cesarbs@gmail.com>
 
