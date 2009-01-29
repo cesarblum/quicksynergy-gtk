@@ -33,6 +33,7 @@ void entry_changed_cb(GtkEntry *entry, gpointer data);
 void about_button_clicked(GtkWidget *widget, gpointer data);
 void start_button_clicked(GtkWidget *widget, gpointer data);
 void close_button_clicked(GtkWidget *widget, gpointer data);
+void browse_button_clicked(GtkButton *button, gpointer userdata);
 gboolean delete_event(GtkWidget *widget, GdkEvent *event, gpointer user_data);
 #if GTK_CHECK_VERSION(2,10,0)
 void quicksynergy_quit(GtkWidget *widget, gpointer data);

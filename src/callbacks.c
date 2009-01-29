@@ -22,9 +22,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
 #include <signal.h>
 #include <unistd.h>
+#include <glib.h>
 #include <gtk/gtk.h>
 #include "callbacks.h"
 #include "synergy_config.h"
@@ -87,6 +89,27 @@ void entry_changed_cb(GtkEntry *entry, gpointer data) {
     *((char **) data) = (char *) gtk_entry_get_text(entry);
 }
 
+void browse_button_clicked(GtkButton *button, gpointer userdata) {
+    GtkWidget *synergy_path_entry = (GtkWidget *) userdata;
+    GtkWidget *dialog;
+    
+    dialog = gtk_file_chooser_dialog_new(_("Choose path to synergy binaries"),
+        GTK_WINDOW(main_window), GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
+        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+        GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+        NULL);
+        
+    if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
+        gchar *folder;
+        
+        folder = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+        gtk_entry_set_text(synergy_path_entry, folder);
+        g_free(folder);
+    }
+    
+    gtk_widget_destroy(dialog);
+}
+
 void about_button_clicked(GtkWidget *widget, gpointer data) {
     GtkWidget *window = (GtkWidget *) data;
     
@@ -130,37 +153,79 @@ void about_button_clicked(GtkWidget *widget, gpointer data) {
 
 void start_button_clicked(GtkWidget *widget, gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
-    const char *env_home = getenv("HOME");
-    char *filename;
+    const char *home_dir = getenv("HOME");
+    struct stat finfo;
+    gchar *cmd;
     int status;
+    
+    chdir(home_dir);
     
     if(!state->running) {
         if(gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook)) == 0) {    
             save_config(state);
             save_synergy_config(state);
-        
-            filename = (char *) malloc(
-                (strlen(env_home) + strlen("/.quicksynergy/synergy.conf") + 1) * 
-                sizeof(char));
-        
-            sprintf(filename, "%s%s", env_home, "/.quicksynergy/synergy.conf");
             
-            if((pid = fork()) == 0) {
-                execlp("synergys", "synergys", "-f", "--config",  filename, NULL);
+            cmd = g_strjoin("/", state->synergy_path, "synergys", NULL);
+            
+            if (stat(cmd, &finfo) == -1) {
+                GtkWidget *dialog;
+                
+                dialog = gtk_message_dialog_new(GTK_WINDOW(main_window),
+                    GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                    _("%s: File not found."), cmd);
+                gtk_window_set_title(GTK_WINDOW(dialog), _("Error"));
+                
+                gtk_dialog_run(GTK_DIALOG(dialog));
+                
+                gtk_widget_destroy(dialog);
+                
+                g_free(cmd);
+                
+                return;
             }
             
-            gtk_widget_set_sensitive(notebook, FALSE);
+            pid = fork();
+        
+            if(pid == 0) {
+                execlp(cmd, cmd, "-f", "--config",
+                    ".quicksynergy/synergy.conf", NULL);
+            }
             
-            free(filename);
+            g_free(cmd);
+            
+            gtk_widget_set_sensitive(notebook, FALSE);
             
             state->running = SYNERGY_SERVER_RUNNING;
         }
         else if(gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook)) == 1) {
             save_config(state);
-
-            if((pid = fork()) == 0) {
-                execlp("synergyc", "synergyc", "-f", state->hostname, NULL);
+            
+            cmd = g_strjoin("/", state->synergy_path, "synergyc", NULL);
+            
+            if (stat(cmd, &finfo) == -1) {
+                GtkWidget *dialog;
+                
+                dialog = gtk_message_dialog_new(GTK_WINDOW(main_window),
+                    GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                    _("%s: File not found."), cmd);
+                gtk_window_set_title(GTK_WINDOW(dialog), _("Error"));
+                
+                gtk_dialog_run(GTK_DIALOG(dialog));
+                
+                gtk_widget_destroy(dialog);
+                
+                g_free(cmd);
+                
+                return;
             }
+
+            pid = fork();
+
+            if(pid == 0) {
+                execlp(cmd, cmd, "-f", state->hostname, NULL);
+            }
+            
+            g_free(cmd);
 
             state->running = SYNERGY_CLIENT_RUNNING;
         }
@@ -268,3 +333,4 @@ void status_icon_popup(GtkStatusIcon *status_icon, guint button,
         gtk_status_icon_position_menu, status_icon, button, activate_time);
 }
 #endif
+
