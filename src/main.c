@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
             GTK_WIN_POS_CENTER);
     gtk_window_set_resizable(GTK_WINDOW(main_window), FALSE);
     gtk_container_set_border_width(GTK_CONTAINER(main_window), 12);
-    gtk_window_set_icon(main_window, make_logo());
+    gtk_window_set_icon(GTK_WINDOW(main_window), make_logo());
     
     /* main window events */
     g_signal_connect(G_OBJECT(main_window), "delete_event",
