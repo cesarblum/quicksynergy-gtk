@@ -1,11 +1,13 @@
 2009-01-28  Cesar L. B. Silveira <cesarbs@gmail.com>
 
-		* src/callbacks.c: implemented SynergyPath functionality.
-		Updated authors list in About dialog.
+		* src/callbacks.c: implemented SynergyPath functionality. Updated
+		authors list in About dialog. Moved synergy process pid to
+		qs_state_t structure.
 		
-		* src/callbacks.h: likewise.
+		* src/callbacks.h: implemented SynergyPath functionality.
 		
-		* src/main.c: removed allocation of qs_state_t structure.
+		* src/main.c: removed allocation of qs_state_t structure. Moved
+		synergy process pid to qs_state_t structure.
 		
 		* src/synergy_config.c: load_config() returns qs_state_t
 		structure with default values and information read from
@@ -17,7 +19,8 @@
 		changed appearance of Settings tab (looks more like the Use tab
 		now).
 
-		* src/ui.h: moved char* fields to gchar*.
+		* src/ui.h: moved char* fields to gchar*. Moved synergy process
+		pid to qs_state_t structure.
 
 		* THANKS: fixed openSUSE spelling.
 
