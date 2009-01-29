@@ -20,89 +20,106 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <glib.h>
 #include "synergy_config.h"
 #include "ui.h"
 #include "intl.h"
 
 qs_state_t *load_config() {
     const char *home_dir = getenv("HOME");
-    char option[16], value[32];
     qs_state_t *state;
-    FILE *fp;
-    
-    state = (qs_state_t *) malloc(sizeof(qs_state_t));
-    
-    state->above = _("Above");
-    state->below = _("Below");
-    state->left = _("Left");
-    state->right = _("Right");
-    state->hostname = "";
-    state->synergy_path = "/usr/bin";
-    state->client_name = "";
-    state->running = 0;
+    GKeyFile *key_file;
     
     chdir(home_dir);
     
-    if((fp = fopen(QS_CONF_DIR QS_CONF_FILE, "r"))) {
-        do {
-            if(fscanf(fp, "%s%s", option, value) != EOF) {
-                if(!strcmp(option, "Above")) {
-                    state->above = strdup(value);
-                } else if(!strcmp(option, "Below")) {
-                    state->below = strdup(value);
-                } else if(!strcmp(option, "Left")) {
-                    state->left = strdup(value);
-                } else if(!strcmp(option, "Right")) {
-                    state->right = strdup(value);
-                } else if(!strcmp(option, "Host")) {
-                    state->hostname = strdup(value);
-                } else if(!strcmp(option, "SynergyPath")) {
-                    state->synergy_path = strdup(value);
-                } else if(!strcmp(option, "ClientName")) {
-                    state->client_name = strdup(value);
-                }
-            }
-        } while(!feof(fp));
-    }
+    key_file = g_key_file_new();
+    g_key_file_load_from_file(key_file, QS_CONF_DIR QS_CONF_FILE,
+        G_KEY_FILE_NONE, NULL);
     
+    state = (qs_state_t *) malloc(sizeof(qs_state_t));
+    
+    state->above =
+        (g_key_file_has_key(key_file, "Share", "Above", NULL)   ?
+         g_key_file_get_value(key_file, "Share", "Above", NULL) :
+         _("Above"));
+
+    state->below =
+        (g_key_file_has_key(key_file, "Share", "Below", NULL)   ?
+         g_key_file_get_value(key_file, "Share", "Below", NULL) :
+         _("Below"));
+
+    state->left =
+        (g_key_file_has_key(key_file, "Share", "Left", NULL) ?
+         g_key_file_get_value(key_file, "Share", "Left", NULL) :
+         _("Left"));
+
+    state->right =
+        (g_key_file_has_key(key_file, "Share", "Right", NULL) ?
+         g_key_file_get_value(key_file, "Share", "Right", NULL) :
+         _("Right"));
+
+    state->hostname =
+        (g_key_file_has_key(key_file, "Use", "Hostname", NULL) ?
+         g_key_file_get_value(key_file, "Use", "Hostname", NULL) :
+         "");
+
+    state->client_name =
+        (g_key_file_has_key(key_file, "Use", "ClientName", NULL) ?
+         g_key_file_get_value(key_file, "Use", "ClientName", NULL) :
+         "");
+
+    state->synergy_path =
+        (g_key_file_has_key(key_file, "Settings", "SynergyPath", NULL) ?
+         g_key_file_get_value(key_file, "Settings", "SynergyPath", NULL) :
+         "/usr/bin");
+
+    g_key_file_free(key_file);
+
     return state;
 }
 
 void save_config(qs_state_t *state) {
     const char *home_dir = getenv("HOME");
-    FILE *f;
+    GKeyFile *key_file;
+    gsize length;
+    gchar *data;
     
     chdir(home_dir);
     
     mkdir(QS_CONF_DIR, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
     
-    f = fopen(QS_CONF_DIR QS_CONF_FILE, "w");
+    key_file = g_key_file_new();
     
-    if(strcmp(state->above, _("Above")) && strcmp(state->above, ""))
-        fprintf(f, "Above %s\n", state->above);
+    if(g_strcmp0(state->above, _("Above"))) {
+        g_key_file_set_value(key_file, "Share", "Above", state->above);
+    }
 
-    if(strcmp(state->below, _("Below")) && strcmp(state->below, ""))
-        fprintf(f, "Below %s\n", state->below);
+    if(g_strcmp0(state->below, _("Below"))) {
+        g_key_file_set_value(key_file, "Share", "Below", state->below);
+    }
 
-    if(strcmp(state->left, _("Left")) && strcmp(state->left, ""))
-        fprintf(f, "Left %s\n", state->left);
+    if(g_strcmp0(state->left, _("Left"))) {
+        g_key_file_set_value(key_file, "Share", "Left", state->left);
+    }
 
-    if(strcmp(state->right, _("Right")) && strcmp(state->right, ""))
-        fprintf(f, "Right %s\n", state->right);
+    if(g_strcmp0(state->right, _("Right"))) {
+        g_key_file_set_value(key_file, "Share", "Right", state->right);
+    }
 
-    if(strcmp(state->hostname, ""))
-        fprintf(f, "Host %s\n", state->hostname);
+    g_key_file_set_value(key_file, "Use", "Hostname", state->hostname);
     
-    if(strcmp(state->synergy_path, ""))
-        fprintf(f, "SynergyPath %s\n", state->synergy_path);
+    g_key_file_set_value(key_file, "Use", "ClientName", state->client_name);
     
-    if(strcmp(state->client_name, ""))
-        fprintf(f, "ClientName %s\n", state->client_name);
+    g_key_file_set_value(key_file, "Settings", "SynergyPath",
+        state->synergy_path);
     
-    fclose(f);
+    data = g_key_file_to_data(key_file, &length, NULL);
+    g_file_set_contents(QS_CONF_DIR QS_CONF_FILE, data, length, NULL);
+    
+    g_key_file_free(key_file);
 }
 
 void save_synergy_config(qs_state_t *state) {
