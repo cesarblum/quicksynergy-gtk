@@ -2,7 +2,7 @@
 
 		* src/callbacks.c: implemented SynergyPath functionality. Updated
 		authors list in About dialog. Moved synergy process pid to
-		qs_state_t structure.
+		qs_state_t structure. Allow setting client name in client mode.
 		
 		* src/callbacks.h: implemented SynergyPath functionality.
 		
@@ -11,16 +11,17 @@
 		
 		* src/synergy_config.c: load_config() returns qs_state_t
 		structure with default values and information read from
-		configuration file.
+		configuration file. Allow setting client name in client mode.
 		
 		* src/synergy_config.h: likewise.
 		
 		* src/ui.c: moved screen name config field to Use tab and
 		changed appearance of Settings tab (looks more like the Use tab
-		now).
+		now). Allow setting client name in client mode.
 
 		* src/ui.h: moved char* fields to gchar*. Moved synergy process
-		pid to qs_state_t structure.
+		pid to qs_state_t structure. Allow setting client name in client
+		mode.
 
 		* THANKS: fixed openSUSE spelling.
 
