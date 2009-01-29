@@ -47,7 +47,6 @@ int main(int argc, char **argv) {
 #if GTK_CHECK_VERSION(2,10,0)
     GtkStatusIcon *status_icon;
 #endif
-    pid_t pid = 0;
     qs_state_t *state;
 
 #ifdef ENABLE_NLS

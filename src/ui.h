@@ -19,6 +19,7 @@
 #ifndef UI_H
 #define UI_H
 
+#include <unistd.h>
 #include <glib.h>
 #include <gtk/gtk.h>
 
@@ -31,6 +32,7 @@ typedef struct qs_state {
     gchar *synergy_path;
     gchar *screen_name;
     int running;
+    pid_t pid;
 } qs_state_t;
 
 GdkPixbuf *make_logo(void);

@@ -52,8 +52,6 @@ static GtkActionEntry popup_menu_actions[] = {
 };
 #endif
 
-pid_t pid;
-
 extern GtkWidget *main_window;
 extern GtkWidget *notebook;
 
@@ -186,9 +184,9 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
                 return;
             }
             
-            pid = fork();
+            state->pid = fork();
         
-            if(pid == 0) {
+            if(state->pid == 0) {
                 execlp(cmd, cmd, "-f", "--config",
                     ".quicksynergy/synergy.conf", NULL);
             }
@@ -221,9 +219,9 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
                 return;
             }
 
-            pid = fork();
+            state->pid = fork();
 
-            if(pid == 0) {
+            if(state->pid == 0) {
                 execlp(cmd, cmd, "-f", state->hostname, NULL);
             }
             
@@ -236,7 +234,7 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
         gtk_widget_set_sensitive(notebook, FALSE);
     }
     else {
-        kill(pid, SIGTERM);
+        kill(state->pid, SIGTERM);
 
         wait(&status);
         
@@ -252,7 +250,7 @@ void quicksynergy_quit(GtkWidget *widget, gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
     
     if(state->running) {
-        kill(pid, SIGTERM);
+        kill(state->pid, SIGTERM);
     }
     
     save_config(state);
@@ -274,7 +272,7 @@ void close_button_clicked(GtkWidget *widget, gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
     
     if(state->running) {
-        kill(pid, SIGTERM);
+        kill(state->pid, SIGTERM);
     }
     
     save_config(state);
@@ -286,7 +284,7 @@ gboolean delete_event(GtkWidget *widget, GdkEvent *event, gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
     
     if(state->running) {
-        kill(pid, SIGTERM);
+        kill(state->pid, SIGTERM);
     }
     
     save_config(state);
