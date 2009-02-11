@@ -1,0 +1,42 @@
+This is the README file for QuickSynergy, version 0.5 for Linux.
+
+QuickSynergy is a GUI (Graphical User Interface) for synergy, an
+application that allows the user to share his/her mouse and keyboard
+between two or more computers over a simple TCP/IP network. This is
+also known as "software KVM", altough in true KVM the monitor is also
+shared.
+
+The motivation to write QuickSynergy was the fact that there was no
+graphical interface for the Linux and Mac versions of synergy. Since
+many users do not enjoy writting configuration files by hand, we
+decided to make a simple graphical tool that would do such job.
+
+It is important to note that the aim of QuickSynergy is not to
+provide a full-featured user interface, but only an interface that is
+as simple as possible that allows the user to quickly get synergy
+running on his/her machines.
+
+Usage:
+
+    * if you want to start a synergy server, select the Server tab on the main
+    window and fill in the text boxes according to the position where the other
+    machines are located.
+    
+    * otherwise, if you want tu run a synergy client, select the Client tab
+    and type in the hostname or the local IP address of the machine running 
+    the server.
+    
+    * after configuring a server or a client, just click the Start button. If
+    you want to change anything, click it again (it is going to be labeled
+    "Stop" this time), make any changes you want, and click the Start button 
+    again.
+    
+    * the Settings tab allows you to set an option that will keep synergy 
+    running even after you close QuickSynergy.
+    
+Please also note that you need to have synergy installed on you system before
+you can use QuickSynergy. The Linux version does not have synergy bundled with 
+it.
+
+Bug reports may be sent directly to the authors of the program. Contact
+information may be found on the AUTHORS file.
