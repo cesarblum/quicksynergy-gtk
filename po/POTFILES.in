@@ -1,3 +1,4 @@
 src/callbacks.c
-src/synergy_config.c
 src/main.c
+src/synergy_config.c
+src/ui.c
