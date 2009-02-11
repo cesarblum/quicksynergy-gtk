@@ -1,0 +1,10 @@
+0.2 - 0.3:
+
+- Quicksynergy now detects if synergy is already running when it is started
+- Eliminated Glade dependency
+- Better icon
+
+0.1 - 0.2:
+
+- QuickSynergy now "remembers" the last server setup
+- New website URL on about dialog

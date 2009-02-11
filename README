@@ -1,0 +1,27 @@
+
+QuickSynergy v0.3 for Linux by César L. B. Silveira
+-----------------------------------------------------------
+
+
+Installation instructions:
+-----------------------------
+
+Just follow the good old procedure:
+
+    ./configure
+    make
+    make install
+
+    
+Using QuickSynergy:
+-----------------------------
+
+To start a synergy server, just enter the client machines' hostnames on
+the apropriate field in the first tab of the program. Then click start.
+
+To start a synergy client, select the Client tab on the QuickSynergy main
+window and enter the server's hostname. Then click start.
+
+Note that even if you close QuickSynergy, synergy will be kept running on the
+background. If you don't want synergy to keep running after you close
+QuickSynergy, then click the Stop button before closing it.
