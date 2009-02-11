@@ -19,7 +19,7 @@ AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([gethostname mkdir])
 
-PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= 2.6.0])
+PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= 2.10.0])
 
 AM_GNU_GETTEXT_VERSION([0.16])
 AM_GNU_GETTEXT([external])
