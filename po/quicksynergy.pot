@@ -1,0 +1,73 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Copyright (C) 2006 César L. B. Silveira, Otávio C. Cordeiro
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: cesarbs@gmail.com\n"
+"POT-Creation-Date: 2007-07-24 20:43-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/callbacks.c:50 src/main.c:152
+msgid "Settings"
+msgstr ""
+
+#: src/callbacks.c:51
+msgid "Quit"
+msgstr ""
+
+#: src/callbacks.c:117
+msgid "A GUI for synergy"
+msgstr ""
+
+#: src/callbacks.c:125
+msgid "translator-credits"
+msgstr ""
+
+#: src/synergy_config.c:91 src/synergy_config.c:141 src/synergy_config.c:159
+#: src/synergy_config.c:172 src/main.c:94
+msgid "Above"
+msgstr ""
+
+#: src/synergy_config.c:95 src/synergy_config.c:144 src/synergy_config.c:162
+#: src/synergy_config.c:177 src/main.c:95
+msgid "Below"
+msgstr ""
+
+#: src/synergy_config.c:99 src/synergy_config.c:147 src/synergy_config.c:165
+#: src/synergy_config.c:182 src/main.c:96
+msgid "Left"
+msgstr ""
+
+#: src/synergy_config.c:103 src/synergy_config.c:150 src/synergy_config.c:168
+#: src/synergy_config.c:187 src/main.c:97
+msgid "Right"
+msgstr ""
+
+#: src/main.c:120
+msgid "Share"
+msgstr ""
+
+#: src/main.c:127
+msgid "Server hostname/IP address:"
+msgstr ""
+
+#: src/main.c:136
+msgid "Use"
+msgstr ""
+
+#: src/main.c:146
+msgid "Keep synergy running after QuickSynergy is closed"
+msgstr ""
+
+#: src/main.c:203 src/main.c:208
+msgid "Stop"
+msgstr ""

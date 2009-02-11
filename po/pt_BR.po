@@ -1,0 +1,74 @@
+# Portuguese translations for QuickSynergy package
+# Traduções em português para o pacote QuickSynergy.
+# Copyright (C) 2007 César L. B. Silveira, Otávio C. Cordeiro
+# This file is distributed under the same license as the QuickSynergy package.
+# Cesar L. B. Silveira <cesarbs@gmail.com>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: QuickSynergy 0.7\n"
+"Report-Msgid-Bugs-To: cesarbs@gmail.com\n"
+"POT-Creation-Date: 2007-07-24 20:43-0300\n"
+"PO-Revision-Date: 2007-07-16 21:04-0300\n"
+"Last-Translator: Cesar L. B. Silveira <cesarbs@gmail.com>\n"
+"Language-Team: Portuguese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: src/callbacks.c:50 src/main.c:152
+msgid "Settings"
+msgstr "Configurações"
+
+#: src/callbacks.c:51
+msgid "Quit"
+msgstr "Sair"
+
+#: src/callbacks.c:117
+msgid "A GUI for synergy"
+msgstr "Uma GUI para o synergy"
+
+#: src/callbacks.c:125
+msgid "translator-credits"
+msgstr "César L. B. Silveira <cesarbs@gmail.com>"
+
+#: src/synergy_config.c:91 src/synergy_config.c:141 src/synergy_config.c:159
+#: src/synergy_config.c:172 src/main.c:94
+msgid "Above"
+msgstr "Acima"
+
+#: src/synergy_config.c:95 src/synergy_config.c:144 src/synergy_config.c:162
+#: src/synergy_config.c:177 src/main.c:95
+msgid "Below"
+msgstr "Abaixo"
+
+#: src/synergy_config.c:99 src/synergy_config.c:147 src/synergy_config.c:165
+#: src/synergy_config.c:182 src/main.c:96
+msgid "Left"
+msgstr "Esquerda"
+
+#: src/synergy_config.c:103 src/synergy_config.c:150 src/synergy_config.c:168
+#: src/synergy_config.c:187 src/main.c:97
+msgid "Right"
+msgstr "Direita"
+
+#: src/main.c:120
+msgid "Share"
+msgstr "Compartilhar"
+
+#: src/main.c:127
+msgid "Server hostname/IP address:"
+msgstr "Hostname/endereço IP do servidor:"
+
+#: src/main.c:136
+msgid "Use"
+msgstr "Usar"
+
+#: src/main.c:146
+msgid "Keep synergy running after QuickSynergy is closed"
+msgstr "Manter o synergy rodando após o QuickSynergy ser fechado"
+
+#: src/main.c:203 src/main.c:208
+msgid "Stop"
+msgstr "Parar"

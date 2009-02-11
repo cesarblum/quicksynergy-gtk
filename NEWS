@@ -1,0 +1,12 @@
+QuickSynergy NEWS  2007-07-24
+
+Copyright (C) 2007 Cesar L. B. Silveira, Otavio C. Cordeiro
+
+Version 0.7:
+* Re-autotoolization and re-internationalization
+* pt_BR locales
+* Notification area icon for systems with GTK+ >= 2.10
+
+Version 0.6:
+* Internationalization support
+* New logo

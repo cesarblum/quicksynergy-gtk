@@ -1,0 +1,48 @@
+AC_INIT([QuickSynergy], [0.7], [cesarbs@gmail.com])
+
+AM_INIT_AUTOMAKE(quicksynergy, 0.7)
+
+AC_CONFIG_HEADER(config.h)
+AC_CONFIG_SRCDIR([src/main.c])
+
+AC_PROG_CC
+
+AC_PATH_PROG(SYNERGYS,synergys,"no")
+
+if test $SYNERGYS = "no"; then
+    AC_MSG_ERROR(synergys not installed.)
+fi
+
+AC_PATH_PROG(SYNERGYC,synergyc,"no")
+
+if test $SYNERGYC = "no"; then
+    AC_MSG_ERROR(synergyc not installed.)
+fi
+
+AC_HEADER_DIRENT
+AC_HEADER_STDC
+AC_HEADER_SYS_WAIT
+AC_CHECK_HEADERS([stdlib.h string.h unistd.h])
+
+AC_C_CONST
+AC_TYPE_PID_T
+
+AC_FUNC_FORK
+AC_FUNC_MALLOC
+AC_CHECK_FUNCS([gethostname mkdir])
+
+AM_PATH_GTK_2_0(
+    [2.10.0],
+    [AC_DEFINE(HAVE_GTK_2_10,,[GTK+ >= 2.10 is present])],
+    [AM_PATH_GTK_2_0([2.6.0],,[AC_MSG_ERROR(GTK+ >= 2.6.0 not installed.)])])
+
+AM_GNU_GETTEXT_VERSION([0.16])
+AM_GNU_GETTEXT([external])
+
+AC_CONFIG_FILES([
+    Makefile
+    po/Makefile.in
+    src/logo/Makefile
+    src/Makefile])
+
+AC_OUTPUT
