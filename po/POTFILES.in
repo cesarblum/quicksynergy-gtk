@@ -1,0 +1,5 @@
+src/callbacks.c
+src/synergy_config.c
+src/screen_entry.c
+src/main.c
+src/proc.c
