@@ -1,0 +1,5 @@
+2006-08-16  Cesar L. B. Silveira  <cesarbs@gmail.com>
+
+* synergy now always runs on the foreground
+
+* added GPL notice to source and header files

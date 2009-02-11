@@ -1,0 +1,13 @@
+
+QuickSynergy 0.3.2
+-----------------------------------------------------------
+
+
+This is the 0.3.2 version of QuickSynergy. The only change from
+version 0.3.x is that synergy now runs only on the foreground,
+i.e. if you close QuickSynergy, synergy will terminate.
+
+
+We hope you enjoy QuickSynergy,
+
+    The Authors
