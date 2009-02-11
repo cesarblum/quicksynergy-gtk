@@ -4,6 +4,10 @@
 
 		* configure.in: Changed mininum required GTK version to 2.10.0.
 		
+		* po/quicksynergy.pot: File updated with new strings.
+		
+		* po/pt_BR.po: Updated brazilian portuguese strings.
+		
 		* src/ui.c: Changed Share mode image from application logo to
 		GTK_STOCK_HOME.
 
