@@ -77,7 +77,7 @@ GtkWidget *make_server_tab(qs_state_t *state) {
     gtk_table_attach_defaults(GTK_TABLE(table), right_entry, 2, 3, 1, 2);       
     
     /* image to be displayed in the center of the main window */
-    image = gtk_image_new_from_pixbuf(make_logo());
+    image = gtk_image_new_from_stock(GTK_STOCK_HOME, GTK_ICON_SIZE_DIALOG);
     gtk_table_attach_defaults(GTK_TABLE(table), image, 1, 2, 1, 2);
     
     return table;
