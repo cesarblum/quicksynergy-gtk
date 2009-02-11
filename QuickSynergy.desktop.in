@@ -1,0 +1,10 @@
+
+[Desktop Entry]
+Name=QuickSynergy
+Comment=QuickSynergy
+Exec=quicksynergy
+Icon=@PACKAGE_PIXMAPS_DIR@/quicksynergy-icon.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+

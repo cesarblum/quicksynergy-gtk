@@ -1,0 +1,27 @@
+QuickSynergy
+---------------
+
+QuickSynergy is a graphical user interface (GUI) for easily configuring Synergy2, an application that allows the user to share his mouse and keyboard between two or more computers.
+
+Without the need for any external hardware, Synergy2 uses the TCP/IP protocol to share resources, even between machines with different operating systems, such as Mac OS, Linux or Windows.
+
+So, QuickSynergy is a graphical user interface for Mac OS and Linux systems, since the official website presents only a Windows version.
+
+
+Installation Instructions
+----------------------------
+
+Just follow the usual procedure:
+
+./configure
+make
+make install
+
+You will need the GTK 2.0 and libglade-2.0 development packges installed on your computer in order to achieve a successful compilation.
+
+Using QuickSynergy
+---------------------
+
+To configure synergy as a server, select the Server tab on the QuickSynergy main window. Fill in the fields with the clients' IP adresses/hostnames and then click Start. If you wish to stop the server, click Stop. Please notice that you cannot change any of the configurations nor start a synergy client while running the server. Also notice that if you click the Close button, the server will NOT be stopped.
+
+To configure synergy as a client, select the Client tab on the QuickSynergy main window. Fill in the field with the server's IP address/hostname and the click Start. If you wish to stop the client, click Stop. Please notice that you cannot change the server's address nor start a synergy server while running the client. Also notice that if you click the Close button, the client will NOT be stopped.

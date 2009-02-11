@@ -1,0 +1,10 @@
+
+[Desktop Entry]
+Name=QuickSynergy
+Comment=QuickSynergy
+Exec=quicksynergy
+Icon=/usr/local/share/pixmaps/QuickSynergy/quicksynergy-icon.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+
