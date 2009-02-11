@@ -1,5 +1,18 @@
 2009-01-29  Cesar L. B. Silveira <cesarbs@gmail.com>
 
+		* configure: Changed mininum required GTK version to 2.10.0.
+
+		* configure.in: Changed mininum required GTK version to 2.10.0.
+		
+		* po/quicksynergy.pot: File updated with new strings.
+		
+		* po/pt_BR.po: Updated brazilian portuguese strings.
+		
+		* src/ui.c: Changed Share mode image from application logo to
+		GTK_STOCK_HOME.
+
+2009-01-29  Cesar L. B. Silveira <cesarbs@gmail.com>
+
 		* configure: Changed version to 0.9.0.
 		
 		* configure.in: Changed version to 0.9.0.

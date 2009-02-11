@@ -5,7 +5,10 @@ Copyright (C) 2006, 2007, 2008, 2009 Cesar L. B. Silveira, Otavio C. Cordeiro
 Version 0.9.0:
 * Allow setting client name in Use mode.
 * Configurable path to synergy binaries.
-* New configuration file format.
+* New configuration file format (key-value).
+* New Share mode image in main window.
+* Minimum required GTK version now 2.10.
+* Bug fixes.
 
 Version 0.8.1:
 * Fixed potential segmentation faults when loading/saving configuration

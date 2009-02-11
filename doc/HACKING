@@ -1,0 +1,18 @@
+Re-generating gettext template file
+===================================
+
+xgettext -d quicksynergy -o quicksynergy.pot -p po -j -s --keyword='_' src/*.c
+
+Creating a new translation
+==========================
+
+cd po/
+msginit -l LOCALE -o LOCALE.po -i quicksynergy.pot
+
+
+Recompiling a message catalog
+=============================
+
+cd po/
+msgfmt -c -v -o LOCALE.mo LOCALE.po
+
