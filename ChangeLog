@@ -1,4 +1,10 @@
-2009-01-29  Cesar L. B. Silveira <cesarbs@gmail.com>
+2009-02-15  Cesar L. B. Silveira <cesarbs@gmail.com>
+
+		* configure: Added check for glib >= 2.16.0.
+
+		* configure.in: Added check for glib >= 2.16.0.
+
+2009-02-11  Cesar L. B. Silveira <cesarbs@gmail.com>
 
 		* configure: Changed mininum required GTK version to 2.10.0.
 
