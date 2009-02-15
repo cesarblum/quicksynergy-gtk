@@ -47,8 +47,8 @@ static gchar popup_menu_actions_xml[] =
     "</ui>\n";
 
 static GtkActionEntry popup_menu_actions[] = {
-    { "ActionSettings", GTK_STOCK_PREFERENCES, N_("Settings"), NULL, NULL, show_main_window },
-    { "ActionQuit",     GTK_STOCK_QUIT,        N_("Quit"),     NULL, NULL, quicksynergy_quit },    
+    { "ActionSettings", GTK_STOCK_PREFERENCES, N_("Settings"), NULL, NULL, G_CALLBACK(show_main_window) },
+    { "ActionQuit",     GTK_STOCK_QUIT,        N_("Quit"),     NULL, NULL, G_CALLBACK(quicksynergy_quit) },
 };
 #endif
 
@@ -111,7 +111,7 @@ void browse_button_clicked(GtkButton *button, gpointer userdata) {
         gchar *folder;
         
         folder = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-        gtk_entry_set_text(synergy_path_entry, folder);
+        gtk_entry_set_text(GTK_ENTRY(synergy_path_entry), folder);
         g_free(folder);
     }
     
