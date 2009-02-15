@@ -19,6 +19,7 @@
 #include "config.h"
 #include "intl.h"
 
+#include <unistd.h>
 #include <sys/types.h>
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -54,11 +55,14 @@ GtkWidget *screen_entry_new(char **textp, const char *position) {
 
 GtkWidget *make_server_tab(qs_state_t *state) {
     GtkWidget *table;
+    GtkWidget *vbox;
     GtkWidget *image;
+    GtkWidget *label;
     GtkWidget *above_entry;
     GtkWidget *below_entry;
     GtkWidget *left_entry;
     GtkWidget *right_entry;
+    char hostname[64];
     
     /* build the table that will hold the server layout widgets */
     table = gtk_table_new(3, 3, TRUE);
@@ -73,12 +77,22 @@ GtkWidget *make_server_tab(qs_state_t *state) {
     /* attach entries to table */
     gtk_table_attach_defaults(GTK_TABLE(table), above_entry, 1, 2, 0, 1);
     gtk_table_attach_defaults(GTK_TABLE(table), below_entry, 1, 2, 2, 3);
-    gtk_table_attach_defaults(GTK_TABLE(table), left_entry, 0, 1, 1, 2);            
-    gtk_table_attach_defaults(GTK_TABLE(table), right_entry, 2, 3, 1, 2);       
+    gtk_table_attach_defaults(GTK_TABLE(table), left_entry, 0, 1, 1, 2);
+    gtk_table_attach_defaults(GTK_TABLE(table), right_entry, 2, 3, 1, 2);
+
+    /* vbox which will hold the center image and label */
+    vbox = gtk_vbox_new(FALSE, 6);
+    gtk_table_attach_defaults(GTK_TABLE(table), vbox, 1, 2, 1, 2);
     
     /* image to be displayed in the center of the main window */
     image = gtk_image_new_from_stock(GTK_STOCK_HOME, GTK_ICON_SIZE_DIALOG);
-    gtk_table_attach_defaults(GTK_TABLE(table), image, 1, 2, 1, 2);
+    gtk_box_pack_start(GTK_BOX(vbox), image, FALSE, FALSE, 0);
+
+    /* label with computer's hostname to be placed under the center image */
+    if(!gethostname(hostname, sizeof(hostname))) {
+        label = gtk_label_new(hostname);
+        gtk_box_pack_start(GTK_BOX(vbox), label,  FALSE, FALSE, 0);
+    }
     
     return table;
 }
