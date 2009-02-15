@@ -32,7 +32,7 @@ GtkWidget *vbox0;
 
 GtkWidget *main_window;
 GtkWidget *notebook;
-GtkWidget *start_button;
+GtkWidget *start_button = NULL;
 
 int main(int argc, char **argv) {
     GtkWidget *vbox;

@@ -90,10 +90,12 @@ void entry_changed_cb(GtkEntry *entry, gpointer data) {
 
 void notebook_page_switched(GtkNotebook *notebook, GtkNotebookPage *page,
         guint page_num, gpointer user_data) {
-    if (page_num == 2) {
-        gtk_widget_set_sensitive(start_button, FALSE);
-    } else {
-        gtk_widget_set_sensitive(start_button, TRUE);
+    if(start_button) {
+        if (page_num == 2) {
+            gtk_widget_set_sensitive(start_button, FALSE);
+        } else {
+            gtk_widget_set_sensitive(start_button, TRUE);
+        }
     }
 }
 
