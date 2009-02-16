@@ -199,13 +199,8 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
             state->pid = fork();
         
             if(state->pid == 0) {
-                if(!strcmp(state->screen_name, "")) {
-                    execlp(cmd, cmd, "-f", "--config",
-                        ".quicksynergy/synergy.conf", NULL);
-                } else {
-                    execlp(cmd, cmd, "-f", "--name", state->screen_name,
-                        "--config", ".quicksynergy/synergy.conf", NULL);
-                }
+                execlp(cmd, cmd, "-f", "--config",
+                    ".quicksynergy/synergy.conf", NULL);
             }
             
             g_free(cmd);
@@ -239,10 +234,10 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
             state->pid = fork();
 
             if(state->pid == 0) {
-                if(!strcmp(state->screen_name, "")) {
+                if(!strcmp(state->client_name, "")) {
                     execlp(cmd, cmd, "-f", state->hostname, NULL);
                 } else {
-                    execlp(cmd, cmd, "-f", "--name", state->screen_name,
+                    execlp(cmd, cmd, "-f", "--name", state->client_name,
                         state->hostname, NULL);
                 }
             }

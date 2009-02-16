@@ -106,7 +106,7 @@ GtkWidget *make_client_tab(qs_state_t *state) {
     vbox1 = gtk_vbox_new(FALSE, 18);
     gtk_container_set_border_width(GTK_CONTAINER(vbox1), 12);
     
-    /* server's hostname/IP address */
+    /* hostname */
     vbox = gtk_vbox_new(FALSE, 6);
     gtk_box_pack_start(GTK_BOX(vbox1), vbox, FALSE, FALSE, 0);
     
@@ -114,6 +114,7 @@ GtkWidget *make_client_tab(qs_state_t *state) {
     gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
     gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
     
+    /* entry for placing the server's hostname/IP address */
     entry = gtk_entry_new();
     gtk_entry_set_text(GTK_ENTRY(entry), state->hostname);
     gtk_box_pack_start(GTK_BOX(vbox), entry, FALSE, FALSE, 0);
@@ -121,6 +122,23 @@ GtkWidget *make_client_tab(qs_state_t *state) {
     /* update state information when text changes */
     g_signal_connect(G_OBJECT(entry), "changed",
         G_CALLBACK(entry_changed_cb), (gpointer) &state->hostname);
+    
+    /* screen name */
+    vbox = gtk_vbox_new(FALSE, 6);
+    gtk_box_pack_start(GTK_BOX(vbox1), vbox, FALSE, FALSE, 0);
+    
+    label = gtk_label_new(_("Screen name:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
+    
+    /* entry for placing the server's hostname/IP address */
+    entry = gtk_entry_new();
+    gtk_entry_set_text(GTK_ENTRY(entry), state->client_name);
+    gtk_box_pack_start(GTK_BOX(vbox), entry, FALSE, FALSE, 0);
+
+    /* update state information when text changes */
+    g_signal_connect(G_OBJECT(entry), "changed",
+        G_CALLBACK(entry_changed_cb), (gpointer) &state->client_name);
     
     return vbox1;
 }
@@ -141,7 +159,6 @@ GtkWidget *make_settings_tab(qs_state_t *state) {
     vbox = gtk_vbox_new(FALSE, 6);
     gtk_box_pack_start(GTK_BOX(vbox1), vbox, FALSE, FALSE, 0);
     
-    /* path to synergy binaries */
     label = gtk_label_new(_("Synergy binaries path:"));
     gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
     gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
@@ -171,22 +188,6 @@ GtkWidget *make_settings_tab(qs_state_t *state) {
     
     label = gtk_label_new(_("Browse..."));
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-    
-    /* screen name */
-    vbox = gtk_vbox_new(FALSE, 6);
-    gtk_box_pack_start(GTK_BOX(vbox1), vbox, FALSE, FALSE, 0);
-    
-    label = gtk_label_new(_("Screen name:"));
-    gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-    
-    entry = gtk_entry_new();
-    gtk_entry_set_text(GTK_ENTRY(entry), state->screen_name);
-    gtk_box_pack_start(GTK_BOX(vbox), entry, FALSE, FALSE, 0);
-    
-    /* update state information when text changes */
-    g_signal_connect(G_OBJECT(entry), "changed",
-        G_CALLBACK(entry_changed_cb), (gpointer) &state->screen_name);
 
     return vbox1;
 }

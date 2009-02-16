@@ -67,15 +67,15 @@ qs_state_t *load_config() {
          g_key_file_get_value(key_file, "Use", "Hostname", NULL) :
          "");
 
+    state->client_name =
+        (g_key_file_has_key(key_file, "Use", "ClientName", NULL) ?
+         g_key_file_get_value(key_file, "Use", "ClientName", NULL) :
+         "");
+
     state->synergy_path =
         (g_key_file_has_key(key_file, "Settings", "SynergyPath", NULL) ?
          g_key_file_get_value(key_file, "Settings", "SynergyPath", NULL) :
          "/usr/bin");
-    
-    state->screen_name =
-        (g_key_file_has_key(key_file, "Settings", "ScreenName", NULL) ?
-         g_key_file_get_value(key_file, "Settings", "ScreenName", NULL) :
-         "");
     
     state->running = 0;
 
@@ -114,11 +114,10 @@ void save_config(qs_state_t *state) {
 
     g_key_file_set_value(key_file, "Use", "Hostname", state->hostname);
     
+    g_key_file_set_value(key_file, "Use", "ClientName", state->client_name);
+    
     g_key_file_set_value(key_file, "Settings", "SynergyPath",
         state->synergy_path);
-    
-    g_key_file_set_value(key_file, "Settings", "ScreenName",
-        state->screen_name);
     
     data = g_key_file_to_data(key_file, &length, NULL);
     g_file_set_contents(QS_CONF_DIR QS_CONF_FILE, data, length, NULL);
