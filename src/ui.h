@@ -30,7 +30,7 @@ typedef struct qs_state {
     gchar *right;
     gchar *hostname;
     gchar *synergy_path;
-    gchar *client_name;
+    gchar *screen_name;
     int running;
     pid_t pid;
 } qs_state_t;

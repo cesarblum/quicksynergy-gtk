@@ -67,7 +67,7 @@ qs_state_t *load_config() {
          g_key_file_get_value(key_file, "Use", "Hostname", NULL) :
          "");
 
-    state->client_name =
+    state->screen_name =
         (g_key_file_has_key(key_file, "Use", "ClientName", NULL) ?
          g_key_file_get_value(key_file, "Use", "ClientName", NULL) :
          "");
@@ -114,7 +114,7 @@ void save_config(qs_state_t *state) {
 
     g_key_file_set_value(key_file, "Use", "Hostname", state->hostname);
     
-    g_key_file_set_value(key_file, "Use", "ClientName", state->client_name);
+    g_key_file_set_value(key_file, "Use", "ClientName", state->screen_name);
     
     g_key_file_set_value(key_file, "Settings", "SynergyPath",
         state->synergy_path);

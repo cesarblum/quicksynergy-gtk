@@ -181,12 +181,12 @@ GtkWidget *make_settings_tab(qs_state_t *state) {
     gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
     
     entry = gtk_entry_new();
-    gtk_entry_set_text(GTK_ENTRY(entry), state->client_name);
+    gtk_entry_set_text(GTK_ENTRY(entry), state->screen_name);
     gtk_box_pack_start(GTK_BOX(vbox), entry, FALSE, FALSE, 0);
     
     /* update state information when text changes */
     g_signal_connect(G_OBJECT(entry), "changed",
-        G_CALLBACK(entry_changed_cb), (gpointer) &state->client_name);
+        G_CALLBACK(entry_changed_cb), (gpointer) &state->screen_name);
 
     return vbox1;
 }
