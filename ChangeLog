@@ -1,3 +1,7 @@
+2009-02-17  Cesar L. B. Silveira <cesarbs@gmail.com>
+
+		* Renamed configure.in to configure.ac.
+
 2009-02-15  Cesar L. B. Silveira <cesarbs@gmail.com>
 
 		* configure: Added check for glib >= 2.16.0.
