@@ -14,13 +14,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- */ 
+ */
 
 #ifndef CALLBACKS_H
 #define CALLBACKS_H
 
 #include <gtk/gtk.h>
-#include "config.h"
 
 enum synergy_mode {
     SYNERGY_SERVER_RUNNING = 1,
