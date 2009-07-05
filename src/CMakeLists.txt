@@ -15,4 +15,6 @@ set_target_properties(quicksynergy
 
 target_link_libraries(quicksynergy ${GTK_LIBRARIES})
 
+install(TARGETS quicksynergy DESTINATION bin)
+
 add_subdirectory(logo)
