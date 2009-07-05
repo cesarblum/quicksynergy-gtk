@@ -16,42 +16,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/callbacks.c:50 src/main.c:102
-msgid "Settings"
-msgstr "Configurações"
-
-#: src/callbacks.c:51
-msgid "Quit"
-msgstr "Sair"
-
-#: src/callbacks.c:104
-msgid "Choose path to synergy binaries"
-msgstr "Escolha o caminho para os binários do synergy"
-
-#: src/callbacks.c:148
-msgid "A graphical user interface for synergy"
-msgstr "Uma interface gráfica para o synergy"
-
-#: src/callbacks.c:153
-msgid "translator-credits"
-msgstr "César L. B. Silveira"
-
 #: src/callbacks.c:185 src/callbacks.c:220
 #, c-format
 msgid "%s: File not found."
 msgstr "%s: Arquivo não encontrado."
 
-#: src/callbacks.c:186 src/callbacks.c:221
-msgid "Error"
-msgstr "Erro"
-
-#: src/main.c:92
-msgid "Share"
-msgstr "Compartilhar"
-
-#: src/main.c:97
-msgid "Use"
-msgstr "Usar"
+#: src/callbacks.c:148
+msgid "A graphical user interface for synergy"
+msgstr "Uma interface gráfica para o synergy"
 
 #: src/synergy_config.c:47 src/synergy_config.c:98 src/synergy_config.c:143
 #: src/synergy_config.c:165 src/synergy_config.c:182 src/ui.c:68
@@ -63,28 +35,56 @@ msgstr "Acima"
 msgid "Below"
 msgstr "Abaixo"
 
+#: src/ui.c:175
+msgid "Browse..."
+msgstr "Navegar..."
+
+#: src/callbacks.c:104
+msgid "Choose path to synergy binaries"
+msgstr "Escolha o caminho para os binários do synergy"
+
+#: src/callbacks.c:186 src/callbacks.c:221
+msgid "Error"
+msgstr "Erro"
+
 #: src/synergy_config.c:57 src/synergy_config.c:106 src/synergy_config.c:151
 #: src/synergy_config.c:173 src/synergy_config.c:192 src/ui.c:70
 msgid "Left"
 msgstr "Esquerda"
+
+#: src/callbacks.c:51
+msgid "Quit"
+msgstr "Sair"
 
 #: src/synergy_config.c:62 src/synergy_config.c:110 src/synergy_config.c:155
 #: src/synergy_config.c:177 src/synergy_config.c:197 src/ui.c:71
 msgid "Right"
 msgstr "Direita"
 
+#: src/ui.c:116
+msgid "Screen name:"
+msgstr "Nome da tela:"
+
 #: src/ui.c:99
 msgid "Server hostname/IP address:"
 msgstr "Hostname/endereço IP do servidor:"
 
-#: src/ui.c:116
-msgid "Screen name:"
-msgstr "Nome da tela:"
+#: src/callbacks.c:50 src/main.c:102
+msgid "Settings"
+msgstr "Configurações"
+
+#: src/main.c:92
+msgid "Share"
+msgstr "Compartilhar"
 
 #: src/ui.c:148
 msgid "Synergy binaries path:"
 msgstr "Caminho para os binários do synergy:"
 
-#: src/ui.c:175
-msgid "Browse..."
-msgstr "Navegar..."
+#: src/main.c:97
+msgid "Use"
+msgstr "Usar"
+
+#: src/callbacks.c:153
+msgid "translator-credits"
+msgstr "César L. B. Silveira"
