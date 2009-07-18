@@ -31,6 +31,7 @@ typedef struct qs_state {
     gchar *client_name;
     int running;
     GPid pid;
+    int current_page;
 } qs_state_t;
 
 GdkPixbuf *make_logo(void);

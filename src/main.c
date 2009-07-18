@@ -44,6 +44,7 @@ int main(int argc, char **argv) {
     GtkStatusIcon *status_icon;
 #endif
     qs_state_t *state;
+    int last_page;
 
 #ifdef ENABLE_NLS
     setlocale (LC_ALL, "");
@@ -57,6 +58,9 @@ int main(int argc, char **argv) {
 
     /* load previous configuration */
     state = load_config();
+
+    /* get last page from previous run */
+    last_page = state->current_page;
 
     /* build the main window */
     main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -80,7 +84,7 @@ int main(int argc, char **argv) {
     /* Server/Client/Settings notebook */
     notebook = gtk_notebook_new();
     g_signal_connect(G_OBJECT(notebook), "switch-page",
-        G_CALLBACK(notebook_page_switched), NULL);
+        G_CALLBACK(notebook_page_switched), state);
     gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
 
     /* add server page to the notebook */
@@ -138,6 +142,9 @@ int main(int argc, char **argv) {
 
     /* display the main window */
     gtk_widget_show_all(main_window);
+
+    /* set notebook to last active page */
+    gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), last_page);
 
     /* GTK mainloop */
     gtk_main();

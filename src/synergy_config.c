@@ -72,6 +72,11 @@ qs_state_t *load_config() {
          g_key_file_get_value(key_file, "Use", "ClientName", NULL) :
          "");
 
+    state->current_page =
+        (g_key_file_has_key(key_file, "Settings", "LastPage", NULL) ?
+         g_key_file_get_integer(key_file, "Settings", "LastPage", NULL) :
+         0);
+
     state->running = 0;
 
     g_key_file_free(key_file);
@@ -110,6 +115,8 @@ void save_config(qs_state_t *state) {
     g_key_file_set_value(key_file, "Use", "Hostname", state->hostname);
 
     g_key_file_set_value(key_file, "Use", "ClientName", state->client_name);
+
+    g_key_file_set_integer(key_file, "Settings", "LastPage", state->current_page);
 
     data = g_key_file_to_data(key_file, &length, NULL);
     g_file_set_contents(QS_CONF_DIR QS_CONF_FILE, data, length, NULL);
