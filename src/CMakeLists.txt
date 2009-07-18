@@ -10,8 +10,8 @@ include_directories(${PROJECT_BINARY_DIR}
 
 add_definitions(${GTK_CFLAGS})
 
-set_target_properties(quicksynergy
-                      PROPERTIES LINK_FLAGS ${GTK_LDFLAGS})
+set_target_properties(quicksynergy PROPERTIES
+                      LINK_FLAGS ${GTK_LDFLAGS})
 
 target_link_libraries(quicksynergy ${GTK_LIBRARIES})
 
