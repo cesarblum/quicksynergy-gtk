@@ -189,8 +189,9 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
     chdir(home_dir);
 
     if(!state->running) {
+        save_config(state);
+
         if(gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook)) == 0) {
-            save_config(state);
             save_synergy_config(state);
 
             argv = make_argv("synergys", "-f", "--config",
@@ -199,8 +200,6 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
             state->running = SYNERGY_SERVER_RUNNING;
         }
         else if(gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook)) == 1) {
-            save_config(state);
-
             if(!strcmp(state->client_name, "")) {
                 argv = make_argv("synergyc", "-f", state->hostname, NULL);
             } else {
