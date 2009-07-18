@@ -27,9 +27,6 @@
 #include "ui.h"
 #include "intl.h"
 
-GtkWidget *table;
-GtkWidget *vbox0;
-
 GtkWidget *main_window;
 GtkWidget *notebook;
 GtkWidget *start_button = NULL;
