@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: QuickSynergy 0.9.0\n"
-"Report-Msgid-Bugs-To: cesarbs@gmail.com\n"
-"POT-Creation-Date: 2009-02-11 19:22-0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-07-18 12:28-0300\n"
 "PO-Revision-Date: 2009-07-01 12:47+0100\n"
 "Last-Translator: Fran Diéguez <fran.dieguez@glug.es>\n"
 "Language-Team: Galician\n"
@@ -15,39 +15,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/callbacks.c:185 src/callbacks.c:220
-#, c-format
-msgid "%s: File not found."
-msgstr "%s: Ficheiro non atopado."
+#: src/ui.c:147
+msgid "<b>Share</b>"
+msgstr ""
 
-#: src/callbacks.c:148
+#: src/ui.c:177
+msgid "<b>Use</b>"
+msgstr ""
+
+#: src/callbacks.c:133
 msgid "A graphical user interface for synergy"
 msgstr "Unha interface de usuario para synergy"
 
-#: src/synergy_config.c:47 src/synergy_config.c:98 src/synergy_config.c:143
-#: src/synergy_config.c:165 src/synergy_config.c:182 src/ui.c:68
+#: src/synergy_config.c:48 src/synergy_config.c:99 src/synergy_config.c:143
+#: src/synergy_config.c:165 src/synergy_config.c:182 src/ui.c:72
 msgid "Above"
 msgstr "Arriba"
 
-#: src/synergy_config.c:52 src/synergy_config.c:102 src/synergy_config.c:147
-#: src/synergy_config.c:169 src/synergy_config.c:187 src/ui.c:69
+#: src/synergy_config.c:53 src/synergy_config.c:103 src/synergy_config.c:147
+#: src/synergy_config.c:169 src/synergy_config.c:187 src/ui.c:73
 msgid "Below"
 msgstr "Abaixo"
 
-#: src/ui.c:175
-msgid "Browse..."
-msgstr "Explorar..."
-
-#: src/callbacks.c:104
-msgid "Choose path to synergy binaries"
-msgstr "Seleccione a ruta aos binarios de synergy"
-
-#: src/callbacks.c:186 src/callbacks.c:221
+#: src/callbacks.c:234
 msgid "Error"
 msgstr "Erro"
 
-#: src/synergy_config.c:57 src/synergy_config.c:106 src/synergy_config.c:151
-#: src/synergy_config.c:173 src/synergy_config.c:192 src/ui.c:70
+#: src/synergy_config.c:58 src/synergy_config.c:107 src/synergy_config.c:151
+#: src/synergy_config.c:173 src/synergy_config.c:192 src/ui.c:74
 msgid "Left"
 msgstr "Esquerda"
 
@@ -55,16 +50,20 @@ msgstr "Esquerda"
 msgid "Quit"
 msgstr "Saír"
 
-#: src/synergy_config.c:62 src/synergy_config.c:110 src/synergy_config.c:155
-#: src/synergy_config.c:177 src/synergy_config.c:197 src/ui.c:71
+#: src/synergy_config.c:63 src/synergy_config.c:111 src/synergy_config.c:155
+#: src/synergy_config.c:177 src/synergy_config.c:197 src/ui.c:75
 msgid "Right"
 msgstr "Dereita"
 
-#: src/ui.c:116
+#: src/ui.c:198
 msgid "Screen name:"
 msgstr "Nome en pantalla:"
 
-#: src/ui.c:99
+#: src/ui.c:166
+msgid "Secure connection with SSH tunnel"
+msgstr ""
+
+#: src/ui.c:113
 msgid "Server hostname/IP address:"
 msgstr "Nome de equipo/enderezo IP do servidor:"
 
@@ -76,14 +75,10 @@ msgstr "Configuracións"
 msgid "Share"
 msgstr "Compartir"
 
-#: src/ui.c:148
-msgid "Synergy binaries path:"
-msgstr "Ruta aos binarios synergy"
-
 #: src/main.c:97
 msgid "Use"
 msgstr "Empregar"
 
-#: src/callbacks.c:153
+#: src/callbacks.c:138
 msgid "translator-credits"
 msgstr "Fran Diéguez <fran.dieguez@glug.es>"
