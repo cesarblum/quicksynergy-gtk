@@ -14,12 +14,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- */ 
+ */
 
 #ifndef UI_H
 #define UI_H
 
-#include <unistd.h>
 #include <glib.h>
 #include <gtk/gtk.h>
 
@@ -29,10 +28,10 @@ typedef struct qs_state {
     gchar *left;
     gchar *right;
     gchar *hostname;
-    gchar *synergy_path;
     gchar *client_name;
     int running;
-    pid_t pid;
+    GPid pid;
+    int current_page;
 } qs_state_t;
 
 GdkPixbuf *make_logo(void);

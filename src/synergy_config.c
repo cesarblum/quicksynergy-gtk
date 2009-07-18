@@ -14,7 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- */ 
+ */
 
 #include "config.h"
 
@@ -33,15 +33,15 @@ qs_state_t *load_config() {
     const char *home_dir = getenv("HOME");
     qs_state_t *state;
     GKeyFile *key_file;
-    
+
     chdir(home_dir);
-    
+
     key_file = g_key_file_new();
     g_key_file_load_from_file(key_file, QS_CONF_DIR QS_CONF_FILE,
         G_KEY_FILE_NONE, NULL);
-    
+
     state = (qs_state_t *) malloc(sizeof(qs_state_t));
-    
+
     state->above =
         (g_key_file_has_key(key_file, "Share", "Above", NULL)   ?
          g_key_file_get_value(key_file, "Share", "Above", NULL) :
@@ -72,11 +72,11 @@ qs_state_t *load_config() {
          g_key_file_get_value(key_file, "Use", "ClientName", NULL) :
          "");
 
-    state->synergy_path =
-        (g_key_file_has_key(key_file, "Settings", "SynergyPath", NULL) ?
-         g_key_file_get_value(key_file, "Settings", "SynergyPath", NULL) :
-         "/usr/bin");
-    
+    state->current_page =
+        (g_key_file_has_key(key_file, "Settings", "LastPage", NULL) ?
+         g_key_file_get_integer(key_file, "Settings", "LastPage", NULL) :
+         0);
+
     state->running = 0;
 
     g_key_file_free(key_file);
@@ -89,13 +89,13 @@ void save_config(qs_state_t *state) {
     GKeyFile *key_file;
     gsize length;
     gchar *data;
-    
+
     chdir(home_dir);
-    
+
     mkdir(QS_CONF_DIR, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
-    
+
     key_file = g_key_file_new();
-    
+
     if(g_strcmp0(state->above, _("Above"))) {
         g_key_file_set_value(key_file, "Share", "Above", state->above);
     }
@@ -113,15 +113,14 @@ void save_config(qs_state_t *state) {
     }
 
     g_key_file_set_value(key_file, "Use", "Hostname", state->hostname);
-    
+
     g_key_file_set_value(key_file, "Use", "ClientName", state->client_name);
-    
-    g_key_file_set_value(key_file, "Settings", "SynergyPath",
-        state->synergy_path);
-    
+
+    g_key_file_set_integer(key_file, "Settings", "LastPage", state->current_page);
+
     data = g_key_file_to_data(key_file, &length, NULL);
     g_file_set_contents(QS_CONF_DIR QS_CONF_FILE, data, length, NULL);
-    
+
     g_key_file_free(key_file);
 }
 
@@ -129,77 +128,77 @@ void save_synergy_config(qs_state_t *state) {
     const char *home_dir = getenv("HOME");
     char hostname[64];
     FILE *f;
-    
+
     chdir(home_dir);
-    
+
     mkdir(QS_CONF_DIR, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
-    
+
     f = fopen(QS_CONF_DIR QS_SYNERGY_CONF_FILE, "w");
-    
+
     gethostname(hostname, 64);
 
     fprintf(f, "section: screens\n");
     fprintf(f, "\t%s:\n", hostname);
-    
+
     if(strcmp(state->above, _("Above"))) {
         fprintf(f, "\t%s:\n", state->above);
     }
-    
+
     if(strcmp(state->below, _("Below"))) {
         fprintf(f, "\t%s:\n", state->below);
     }
-    
+
     if(strcmp(state->left, _("Left"))) {
         fprintf(f, "\t%s:\n", state->left);
     }
-    
+
     if(strcmp(state->right, _("Right"))) {
         fprintf(f, "\t%s:\n", state->right);
     }
-    
+
     fprintf(f, "end\n");
-    
+
     /* server links */
     fprintf(f, "section: links\n");
     fprintf(f, "\t%s:\n", hostname);
-    
+
     if(strcmp(state->above, _("Above"))) {
         fprintf(f, "\t\tup = %s\n", state->above);
     }
-    
+
     if(strcmp(state->below, _("Below"))) {
         fprintf(f, "\t\tdown = %s\n", state->below);
     }
-    
+
     if(strcmp(state->left, _("Left"))) {
         fprintf(f, "\t\tleft = %s\n", state->left);
     }
-    
+
     if(strcmp(state->right, _("Right"))) {
         fprintf(f, "\t\tright = %s\n", state->right);
     }
-    
+
     /* client links */
     if(strcmp(state->above, _("Above"))) {
         fprintf(f, "\t%s:\n", state->above);
         fprintf(f, "\t\tdown = %s\n", hostname);
     }
-    
+
     if(strcmp(state->below, _("Below"))) {
         fprintf(f, "\t%s:\n", state->below);
         fprintf(f, "\t\tup = %s\n", hostname);
     }
-    
+
     if(strcmp(state->left, _("Left"))) {
         fprintf(f, "\t%s:\n", state->left);
         fprintf(f, "\t\tright = %s\n", hostname);
     }
-    
+
     if(strcmp(state->right, _("Right"))) {
         fprintf(f, "\t%s:\n", state->right);
         fprintf(f, "\t\tleft = %s\n", hostname);
     }
-    
+
     fprintf(f, "end\n");
 
     fclose(f);
