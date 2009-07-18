@@ -182,6 +182,7 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
     const char *home_dir = getenv("HOME");
     gchar **argv;
+    GError *err = NULL;
     struct stat finfo;
     int status;
 
@@ -217,10 +218,24 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
                          NULL,
                          NULL,
                          &state->pid,
-                         NULL)) {
+                         &err)) {
             gtk_button_set_label(GTK_BUTTON(widget), GTK_STOCK_MEDIA_STOP);
             gtk_widget_set_sensitive(notebook, FALSE);
             g_child_watch_add(state->pid, synergy_child_watch, state);
+        } else {
+            GtkWidget *dialog;
+
+            dialog = gtk_message_dialog_new(GTK_WINDOW(main_window),
+                GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                "%s", err->message);
+            gtk_window_set_title(GTK_WINDOW(dialog), _("Error"));
+
+            gtk_dialog_run(GTK_DIALOG(dialog));
+
+            gtk_widget_destroy(dialog);
+
+            state->running = 0;
+            g_error_free(err);
         }
 
         g_free(argv);
