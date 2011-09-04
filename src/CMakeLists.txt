@@ -1,6 +1,6 @@
-set(QUICKSYNERGY_SOURCES callbacks.c main.c synergy_config.c ui.c)
+set(quicksynergy_SOURCES callbacks.c main.c synergy_config.c ui.c)
 
-add_executable(quicksynergy ${QUICKSYNERGY_SOURCES})
+add_executable(quicksynergy ${quicksynergy_SOURCES})
 
 add_dependencies(quicksynergy qslogo.h)
 
