@@ -22,15 +22,23 @@
 #include <glib.h>
 
 typedef struct qs_state {
-    gchar *above;
-    gchar *below;
-    gchar *left;
-    gchar *right;
-    gchar *hostname;
-    gchar *client_name;
-    int running;
-    GPid pid;
-    int current_page;
+    struct {
+        gchar *above;
+        gchar *below;
+        gchar *left;
+        gchar *right;
+        gchar *hostname;
+        gchar *client_name;
+    } data;
+
+    struct {
+        int running;
+        GPid pid;
+    } proc;
+
+    struct {
+        int current_page;
+    } ui;
 } qs_state_t;
 
 #endif

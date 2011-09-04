@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
     state = load_config();
 
     /* get last page from previous run */
-    last_page = state->current_page;
+    last_page = state->ui.current_page;
 
     /* build the main window */
     main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);

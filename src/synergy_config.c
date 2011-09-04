@@ -42,42 +42,42 @@ qs_state_t *load_config() {
 
     state = (qs_state_t *) malloc(sizeof(qs_state_t));
 
-    state->above =
+    state->data.above =
         (g_key_file_has_key(key_file, "Share", "Above", NULL)   ?
          g_key_file_get_value(key_file, "Share", "Above", NULL) :
          _("Above"));
 
-    state->below =
+    state->data.below =
         (g_key_file_has_key(key_file, "Share", "Below", NULL)   ?
          g_key_file_get_value(key_file, "Share", "Below", NULL) :
          _("Below"));
 
-    state->left =
+    state->data.left =
         (g_key_file_has_key(key_file, "Share", "Left", NULL) ?
          g_key_file_get_value(key_file, "Share", "Left", NULL) :
          _("Left"));
 
-    state->right =
+    state->data.right =
         (g_key_file_has_key(key_file, "Share", "Right", NULL) ?
          g_key_file_get_value(key_file, "Share", "Right", NULL) :
          _("Right"));
 
-    state->hostname =
+    state->data.hostname =
         (g_key_file_has_key(key_file, "Use", "Hostname", NULL) ?
          g_key_file_get_value(key_file, "Use", "Hostname", NULL) :
          "");
 
-    state->client_name =
+    state->data.client_name =
         (g_key_file_has_key(key_file, "Use", "ClientName", NULL) ?
          g_key_file_get_value(key_file, "Use", "ClientName", NULL) :
          "");
 
-    state->current_page =
+    state->ui.current_page =
         (g_key_file_has_key(key_file, "Settings", "LastPage", NULL) ?
          g_key_file_get_integer(key_file, "Settings", "LastPage", NULL) :
          0);
 
-    state->running = 0;
+    state->proc.running = 0;
 
     g_key_file_free(key_file);
 
@@ -96,27 +96,29 @@ void save_config(qs_state_t *state) {
 
     key_file = g_key_file_new();
 
-    if(g_strcmp0(state->above, _("Above"))) {
-        g_key_file_set_value(key_file, "Share", "Above", state->above);
+    if(g_strcmp0(state->data.above, _("Above"))) {
+        g_key_file_set_value(key_file, "Share", "Above", state->data.above);
     }
 
-    if(g_strcmp0(state->below, _("Below"))) {
-        g_key_file_set_value(key_file, "Share", "Below", state->below);
+    if(g_strcmp0(state->data.below, _("Below"))) {
+        g_key_file_set_value(key_file, "Share", "Below", state->data.below);
     }
 
-    if(g_strcmp0(state->left, _("Left"))) {
-        g_key_file_set_value(key_file, "Share", "Left", state->left);
+    if(g_strcmp0(state->data.left, _("Left"))) {
+        g_key_file_set_value(key_file, "Share", "Left", state->data.left);
     }
 
-    if(g_strcmp0(state->right, _("Right"))) {
-        g_key_file_set_value(key_file, "Share", "Right", state->right);
+    if(g_strcmp0(state->data.right, _("Right"))) {
+        g_key_file_set_value(key_file, "Share", "Right", state->data.right);
     }
 
-    g_key_file_set_value(key_file, "Use", "Hostname", state->hostname);
+    g_key_file_set_value(key_file, "Use", "Hostname", state->data.hostname);
 
-    g_key_file_set_value(key_file, "Use", "ClientName", state->client_name);
+    g_key_file_set_value(key_file, "Use", "ClientName",
+                         state->data.client_name);
 
-    g_key_file_set_integer(key_file, "Settings", "LastPage", state->current_page);
+    g_key_file_set_integer(key_file, "Settings", "LastPage",
+                           state->ui.current_page);
 
     data = g_key_file_to_data(key_file, &length, NULL);
     g_file_set_contents(QS_CONF_DIR QS_CONF_FILE, data, length, NULL);
@@ -140,20 +142,20 @@ void save_synergy_config(qs_state_t *state) {
     fprintf(f, "section: screens\n");
     fprintf(f, "\t%s:\n", hostname);
 
-    if(strcmp(state->above, _("Above"))) {
-        fprintf(f, "\t%s:\n", state->above);
+    if(strcmp(state->data.above, _("Above"))) {
+        fprintf(f, "\t%s:\n", state->data.above);
     }
 
-    if(strcmp(state->below, _("Below"))) {
-        fprintf(f, "\t%s:\n", state->below);
+    if(strcmp(state->data.below, _("Below"))) {
+        fprintf(f, "\t%s:\n", state->data.below);
     }
 
-    if(strcmp(state->left, _("Left"))) {
-        fprintf(f, "\t%s:\n", state->left);
+    if(strcmp(state->data.left, _("Left"))) {
+        fprintf(f, "\t%s:\n", state->data.left);
     }
 
-    if(strcmp(state->right, _("Right"))) {
-        fprintf(f, "\t%s:\n", state->right);
+    if(strcmp(state->data.right, _("Right"))) {
+        fprintf(f, "\t%s:\n", state->data.right);
     }
 
     fprintf(f, "end\n");
@@ -162,40 +164,40 @@ void save_synergy_config(qs_state_t *state) {
     fprintf(f, "section: links\n");
     fprintf(f, "\t%s:\n", hostname);
 
-    if(strcmp(state->above, _("Above"))) {
-        fprintf(f, "\t\tup = %s\n", state->above);
+    if(strcmp(state->data.above, _("Above"))) {
+        fprintf(f, "\t\tup = %s\n", state->data.above);
     }
 
-    if(strcmp(state->below, _("Below"))) {
-        fprintf(f, "\t\tdown = %s\n", state->below);
+    if(strcmp(state->data.below, _("Below"))) {
+        fprintf(f, "\t\tdown = %s\n", state->data.below);
     }
 
-    if(strcmp(state->left, _("Left"))) {
-        fprintf(f, "\t\tleft = %s\n", state->left);
+    if(strcmp(state->data.left, _("Left"))) {
+        fprintf(f, "\t\tleft = %s\n", state->data.left);
     }
 
-    if(strcmp(state->right, _("Right"))) {
-        fprintf(f, "\t\tright = %s\n", state->right);
+    if(strcmp(state->data.right, _("Right"))) {
+        fprintf(f, "\t\tright = %s\n", state->data.right);
     }
 
     /* client links */
-    if(strcmp(state->above, _("Above"))) {
-        fprintf(f, "\t%s:\n", state->above);
+    if(strcmp(state->data.above, _("Above"))) {
+        fprintf(f, "\t%s:\n", state->data.above);
         fprintf(f, "\t\tdown = %s\n", hostname);
     }
 
-    if(strcmp(state->below, _("Below"))) {
-        fprintf(f, "\t%s:\n", state->below);
+    if(strcmp(state->data.below, _("Below"))) {
+        fprintf(f, "\t%s:\n", state->data.below);
         fprintf(f, "\t\tup = %s\n", hostname);
     }
 
-    if(strcmp(state->left, _("Left"))) {
-        fprintf(f, "\t%s:\n", state->left);
+    if(strcmp(state->data.left, _("Left"))) {
+        fprintf(f, "\t%s:\n", state->data.left);
         fprintf(f, "\t\tright = %s\n", hostname);
     }
 
-    if(strcmp(state->right, _("Right"))) {
-        fprintf(f, "\t%s:\n", state->right);
+    if(strcmp(state->data.right, _("Right"))) {
+        fprintf(f, "\t%s:\n", state->data.right);
         fprintf(f, "\t\tleft = %s\n", hostname);
     }
 

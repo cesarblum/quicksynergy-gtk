@@ -69,10 +69,10 @@ GtkWidget *make_server_tab(qs_state_t *state) {
     gtk_container_set_border_width(GTK_CONTAINER(table), 12);
 
     /* text entries for server configuration */
-    above_entry = screen_entry_new(&state->above, _("Above"));
-    below_entry = screen_entry_new(&state->below, _("Below"));
-    left_entry = screen_entry_new(&state->left, _("Left"));
-    right_entry = screen_entry_new(&state->right, _("Right"));
+    above_entry = screen_entry_new(&state->data.above, _("Above"));
+    below_entry = screen_entry_new(&state->data.below, _("Below"));
+    left_entry = screen_entry_new(&state->data.left, _("Left"));
+    right_entry = screen_entry_new(&state->data.right, _("Right"));
 
     /* attach entries to table */
     gtk_table_attach_defaults(GTK_TABLE(table), above_entry, 1, 2, 0, 1);
@@ -116,12 +116,12 @@ GtkWidget *make_client_tab(qs_state_t *state) {
 
     /* entry for placing the server's hostname/IP address */
     entry = gtk_entry_new();
-    gtk_entry_set_text(GTK_ENTRY(entry), state->hostname);
+    gtk_entry_set_text(GTK_ENTRY(entry), state->data.hostname);
     gtk_box_pack_start(GTK_BOX(vbox), entry, FALSE, FALSE, 0);
 
     /* update state information when text changes */
     g_signal_connect(G_OBJECT(entry), "changed",
-        G_CALLBACK(entry_changed_cb), (gpointer) &state->hostname);
+        G_CALLBACK(entry_changed_cb), (gpointer) &state->data.hostname);
 
     return vbox1;
 }
