@@ -16,20 +16,21 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef UI_H
-#define UI_H
+#ifndef STRUCTS_H
+#define STRUCTS_H
 
-#include <gtk/gtk.h>
-#include "state.h"
+#include <glib.h>
 
-GdkPixbuf *make_logo(void);
-
-GtkWidget *screen_entry_new(char **textp, const char *position);
-
-GtkWidget *make_server_tab(qs_state_t *state);
-
-GtkWidget *make_client_tab(qs_state_t *state);
-
-GtkWidget *make_settings_tab(qs_state_t *state);
+typedef struct qs_state {
+    gchar *above;
+    gchar *below;
+    gchar *left;
+    gchar *right;
+    gchar *hostname;
+    gchar *client_name;
+    int running;
+    GPid pid;
+    int current_page;
+} qs_state_t;
 
 #endif
