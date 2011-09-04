@@ -40,14 +40,11 @@ static GtkActionGroup *action_group;
 static gchar popup_menu_actions_xml[] =
     "<ui>\n"
     "<popup>\n"
-    "<menuitem action=\"ActionSettings\" />\n"
-    "<separator />\n"
     "<menuitem action=\"ActionQuit\" />\n"
     "</popup>"
     "</ui>\n";
 
 static GtkActionEntry popup_menu_actions[] = {
-    { "ActionSettings", GTK_STOCK_PREFERENCES, N_("Settings"), NULL, NULL, G_CALLBACK(show_main_window) },
     { "ActionQuit",     GTK_STOCK_QUIT,        N_("Quit"),     NULL, NULL, G_CALLBACK(quicksynergy_quit) },
 };
 #endif
@@ -312,8 +309,7 @@ void status_icon_popup(GtkStatusIcon *status_icon, guint button,
 #ifdef ENABLE_NLS
         gtk_action_group_set_translation_domain(action_group, PACKAGE);
 #endif
-        gtk_action_group_add_actions(action_group, popup_menu_actions, 2, data);
-
+        gtk_action_group_add_actions(action_group, popup_menu_actions, 1, data);
         gtk_ui_manager_insert_action_group(ui_manager, action_group, 0);
         gtk_ui_manager_add_ui_from_string(ui_manager, popup_menu_actions_xml,
             -1, NULL);
