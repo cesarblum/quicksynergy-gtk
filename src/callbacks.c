@@ -49,10 +49,6 @@ static GtkActionEntry popup_menu_actions[] = {
 };
 #endif
 
-extern GtkWidget *main_window;
-extern GtkWidget *notebook;
-extern GtkWidget *start_button;
-
 gboolean entry_focus_in_event(
         GtkWidget *widget, GdkEventFocus *event, gpointer data) {
     char *text;
@@ -164,8 +160,8 @@ gchar **make_argv(gchar *arg0, ...)
 void synergy_child_watch(GPid pid, gint status, gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
 
-    gtk_button_set_label(GTK_BUTTON(start_button), GTK_STOCK_EXECUTE);
-    gtk_widget_set_sensitive(notebook, TRUE);
+    gtk_button_set_label(GTK_BUTTON(state->ui.start_button), GTK_STOCK_EXECUTE);
+    gtk_widget_set_sensitive(state->ui.notebook, TRUE);
 
     state->proc.running = 0;
 }
@@ -177,13 +173,16 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
     GError *err = NULL;
     struct stat finfo;
     int status;
+    gint page;
 
     chdir(home_dir);
 
     if(!state->proc.running) {
         save_config(state);
 
-        if(gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook)) == 0) {
+        page = gtk_notebook_get_current_page(GTK_NOTEBOOK(state->ui.notebook));
+
+        if(page == 0) {
             save_synergy_config(state);
 
             argv = make_argv("synergys", "-f", "--config",
@@ -191,7 +190,7 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
 
             state->proc.running = SYNERGY_SERVER_RUNNING;
         }
-        else if(gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook)) == 1) {
+        else if(page == 1) {
             if(!strcmp(state->data.client_name, "")) {
                 argv = make_argv("synergyc", "-f", state->data.hostname, NULL);
             } else {
@@ -211,12 +210,12 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
                          &state->proc.pid,
                          &err)) {
             gtk_button_set_label(GTK_BUTTON(widget), GTK_STOCK_MEDIA_STOP);
-            gtk_widget_set_sensitive(notebook, FALSE);
+            gtk_widget_set_sensitive(state->ui.notebook, FALSE);
             g_child_watch_add(state->proc.pid, synergy_child_watch, state);
         } else {
             GtkWidget *dialog;
 
-            dialog = gtk_message_dialog_new(GTK_WINDOW(main_window),
+            dialog = gtk_message_dialog_new(GTK_WINDOW(state->ui.main_window),
                 GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
                 "%s", err->message);
             gtk_window_set_title(GTK_WINDOW(dialog), _("Error"));
@@ -250,7 +249,8 @@ void quicksynergy_quit(GtkWidget *widget, gpointer data) {
 }
 
 void close_button_clicked(GtkWidget *widget, gpointer data) {
-    gtk_widget_hide_all(main_window);
+    qs_state_t *state = (qs_state_t *) data;
+    gtk_widget_hide_all(state->ui.main_window);
 }
 
 gboolean delete_event(GtkWidget *widget, GdkEvent *event, gpointer data) {
@@ -288,14 +288,14 @@ gboolean delete_event(GtkWidget *widget, GdkEvent *event, gpointer data) {
 void show_main_window(GtkWidget *widget, gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
 
-    gtk_widget_show_all(main_window);
+    gtk_widget_show_all(state->ui.main_window);
 
     if(!state->proc.running ||
        state->proc.running == SYNERGY_SERVER_RUNNING) {
-        gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
+        gtk_notebook_set_current_page(GTK_NOTEBOOK(state->ui.notebook), 0);
     }
     else {
-        gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 1);
+        gtk_notebook_set_current_page(GTK_NOTEBOOK(state->ui.notebook), 1);
     }
 }
 

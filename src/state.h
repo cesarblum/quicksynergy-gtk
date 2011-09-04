@@ -37,6 +37,9 @@ typedef struct qs_state {
     } proc;
 
     struct {
+        GtkWidget* main_window;
+        GtkWidget* notebook;
+        GtkWidget* start_button;
         int current_page;
     } ui;
 } qs_state_t;

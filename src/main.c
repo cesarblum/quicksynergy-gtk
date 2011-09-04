@@ -27,10 +27,6 @@
 #include "ui.h"
 #include "intl.h"
 
-GtkWidget *main_window;
-GtkWidget *notebook;
-GtkWidget *start_button = NULL;
-
 int main(int argc, char **argv) {
     GtkWidget *vbox;
     GtkWidget *hbox;
@@ -63,39 +59,41 @@ int main(int argc, char **argv) {
     last_page = state->ui.current_page;
 
     /* build the main window */
-    main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(main_window), "QuickSynergy");
-    gtk_window_set_position(GTK_WINDOW(main_window),
+    state->ui.main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(state->ui.main_window), "QuickSynergy");
+    gtk_window_set_position(GTK_WINDOW(state->ui.main_window),
             GTK_WIN_POS_CENTER);
-    gtk_window_set_resizable(GTK_WINDOW(main_window), FALSE);
-    gtk_container_set_border_width(GTK_CONTAINER(main_window), 12);
-    gtk_window_set_icon(GTK_WINDOW(main_window), make_logo());
+    gtk_window_set_resizable(GTK_WINDOW(state->ui.main_window), FALSE);
+    gtk_container_set_border_width(GTK_CONTAINER(state->ui.main_window), 12);
+    gtk_window_set_icon(GTK_WINDOW(state->ui.main_window), make_logo());
 
     /* main window events */
-    g_signal_connect(G_OBJECT(main_window), "delete_event",
+    g_signal_connect(G_OBJECT(state->ui.main_window), "delete_event",
         G_CALLBACK(delete_event), NULL);
-    g_signal_connect(G_OBJECT(main_window), "destroy",
+    g_signal_connect(G_OBJECT(state->ui.main_window), "destroy",
         G_CALLBACK(gtk_main_quit), NULL);
 
     /* main vbox that will hold the application's widgets */
     vbox = gtk_vbox_new(FALSE, 18);
-    gtk_container_add(GTK_CONTAINER(main_window), vbox);
+    gtk_container_add(GTK_CONTAINER(state->ui.main_window), vbox);
 
     /* Server/Client/Settings notebook */
-    notebook = gtk_notebook_new();
-    g_signal_connect(G_OBJECT(notebook), "switch-page",
+    state->ui.notebook = gtk_notebook_new();
+    g_signal_connect(G_OBJECT(state->ui.notebook), "switch-page",
         G_CALLBACK(notebook_page_switched), state);
-    gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), state->ui.notebook, TRUE, TRUE, 0);
 
     /* add server page to the notebook */
     page = make_server_tab(state);
     page_label = gtk_label_new(_("Share"));
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, page_label);
+    gtk_notebook_append_page(
+        GTK_NOTEBOOK(state->ui.notebook), page, page_label);
 
     /* add client page to notebook */
     page = make_client_tab(state);
     page_label = gtk_label_new(_("Use"));
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, page_label);
+    gtk_notebook_append_page(
+        GTK_NOTEBOOK(state->ui.notebook), page, page_label);
 
     /* build the hbox that will hold the action buttons */
     hbox = gtk_hbox_new(TRUE, 22);
@@ -105,15 +103,15 @@ int main(int argc, char **argv) {
     about_button = gtk_button_new_with_label(GTK_STOCK_ABOUT);
     gtk_button_set_use_stock(GTK_BUTTON(about_button), TRUE);
     g_signal_connect(G_OBJECT(about_button), "clicked",
-        G_CALLBACK(about_button_clicked), main_window);
+        G_CALLBACK(about_button_clicked), state->ui.main_window);
     gtk_box_pack_start(GTK_BOX(hbox), about_button, TRUE, TRUE, 0);
 
     /* start/stop button */
-    start_button = gtk_button_new_with_label(GTK_STOCK_EXECUTE);
-    gtk_button_set_use_stock(GTK_BUTTON(start_button), TRUE);
-    g_signal_connect(G_OBJECT(start_button), "clicked",
+    state->ui.start_button = gtk_button_new_with_label(GTK_STOCK_EXECUTE);
+    gtk_button_set_use_stock(GTK_BUTTON(state->ui.start_button), TRUE);
+    g_signal_connect(G_OBJECT(state->ui.start_button), "clicked",
         G_CALLBACK(start_button_clicked), (gpointer) state);
-    gtk_box_pack_start(GTK_BOX(hbox), start_button, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), state->ui.start_button, TRUE, TRUE, 0);
 
     /* close button */
     close_button = gtk_button_new_with_label(GTK_STOCK_CLOSE);
@@ -136,10 +134,10 @@ int main(int argc, char **argv) {
 #endif
 
     /* display the main window */
-    gtk_widget_show_all(main_window);
+    gtk_widget_show_all(state->ui.main_window);
 
     /* set notebook to last active page */
-    gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), last_page);
+    gtk_notebook_set_current_page(GTK_NOTEBOOK(state->ui.notebook), last_page);
 
     /* GTK mainloop */
     gtk_main();
