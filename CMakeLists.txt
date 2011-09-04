@@ -1,6 +1,6 @@
 project(QuickSynergy)
 
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 
 find_package(GTK2 2.6 REQUIRED gtk)
 find_package(Gettext REQUIRED)
