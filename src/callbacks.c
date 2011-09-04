@@ -91,15 +91,6 @@ void entry_changed_cb(GtkEntry *entry, gpointer data) {
 void notebook_page_switched(GtkNotebook *notebook, GtkNotebookPage *page,
         guint page_num, gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
-
-    if(start_button) {
-        if (page_num == 2) {
-            gtk_widget_set_sensitive(start_button, FALSE);
-        } else {
-            gtk_widget_set_sensitive(start_button, TRUE);
-        }
-    }
-
     state->current_page = page_num;
 }
 

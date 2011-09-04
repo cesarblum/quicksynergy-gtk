@@ -97,11 +97,6 @@ int main(int argc, char **argv) {
     page_label = gtk_label_new(_("Use"));
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, page_label);
 
-    /* add settings page to notebook */
-    page = make_settings_tab(state);
-    page_label = gtk_label_new(_("Settings"));
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, page_label);
-
     /* build the hbox that will hold the action buttons */
     hbox = gtk_hbox_new(TRUE, 22);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 0);
