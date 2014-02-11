@@ -81,6 +81,10 @@ void entry_changed_cb(GtkEntry *entry, gpointer data) {
     *((char **) data) = (char *) gtk_entry_get_text(entry);
 }
 
+void checkbox_changed_cb(GtkToggleButton *button, gpointer data) {
+    *((gboolean *) data) = gtk_toggle_button_get_active(button);
+}
+
 void notebook_page_switched(GtkNotebook *notebook, GtkNotebookPage *page,
         guint page_num, gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
@@ -166,6 +170,13 @@ void synergy_child_watch(GPid pid, gint status, gpointer data) {
     state->proc.running = 0;
 }
 
+void tunnel_child_watch(GPid pid, gint status, gpointer data) {
+    qs_state_t *state = (qs_state_t *) data;
+
+    if(state->proc.running == SYNERGY_CLIENT_RUNNING)
+        kill(state->proc.pid, SIGTERM);
+}
+
 void start_button_clicked(GtkWidget *widget, gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
     const char *home_dir = getenv("HOME");
@@ -191,11 +202,49 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
             state->proc.running = SYNERGY_SERVER_RUNNING;
         }
         else if(page == 1) {
+            char *hostname;
+
+            if(state->data.use_socks) {
+                size_t nchars = strlen("localhost:24800::24800") +
+                                strlen(state->data.hostname) + 1;
+                char *tunnel_spec = malloc(nchars);
+                snprintf(tunnel_spec, nchars, "localhost:24800:%s:24800",
+                         state->data.hostname);
+                argv = make_argv("ssh", "-N", "-L", tunnel_spec,
+                                 state->data.hostname, NULL);
+                if(g_spawn_async(NULL, argv, NULL,
+                                 G_SPAWN_DO_NOT_REAP_CHILD | G_SPAWN_SEARCH_PATH,
+                                 NULL, NULL, &state->proc.tunnel_pid, &err)) {
+                    g_child_watch_add(state->proc.tunnel_pid, tunnel_child_watch, state);
+                } else {
+                    GtkWidget *dialog;
+
+                    dialog = gtk_message_dialog_new(GTK_WINDOW(state->ui.main_window),
+                        GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                        "%s", err->message);
+                    gtk_window_set_title(GTK_WINDOW(dialog), _("Error"));
+
+                    gtk_dialog_run(GTK_DIALOG(dialog));
+
+                    gtk_widget_destroy(dialog);
+
+                    g_error_free(err);
+
+                    g_free(argv);
+                    return;
+                }
+                g_free(argv);
+
+                hostname = "localhost";
+            } else {
+                hostname = state->data.hostname;
+            }
+
             if(!strcmp(state->data.client_name, "")) {
-                argv = make_argv("synergyc", "-f", state->data.hostname, NULL);
+                argv = make_argv("synergyc", "-f", hostname, NULL);
             } else {
                 argv = make_argv("synergyc", "-f", "--name",
-                    state->data.client_name, state->data.hostname, NULL);
+                    state->data.client_name, hostname, NULL);
             }
 
             state->proc.running = SYNERGY_CLIENT_RUNNING;
@@ -231,6 +280,9 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
         g_free(argv);
     }
     else {
+        if(state->proc.tunnel_pid)
+            kill(state->proc.tunnel_pid, SIGTERM);
+
         kill(state->proc.pid, SIGTERM);
     }
 }
@@ -240,6 +292,9 @@ void quicksynergy_quit(GtkWidget *widget, gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
 
     if(state->proc.running) {
+        if(state->proc.tunnel_pid)
+            kill(state->proc.tunnel_pid, SIGTERM);
+
         kill(state->proc.pid, SIGTERM);
     }
 
@@ -263,6 +318,9 @@ void close_button_clicked(GtkWidget *widget, gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
 
     if(state->proc.running) {
+        if(state->proc.tunnel_pid)
+            kill(state->proc.tunnel_pid, SIGTERM);
+
         kill(state->proc.pid, SIGTERM);
     }
 
@@ -275,6 +333,9 @@ gboolean delete_event(GtkWidget *widget, GdkEvent *event, gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
 
     if(state->proc.running) {
+        if(state->proc.tunnel_pid)
+            kill(state->proc.tunnel_pid, SIGTERM);
+
         kill(state->proc.pid, SIGTERM);
     }
 

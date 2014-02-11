@@ -30,6 +30,7 @@ enum synergy_mode {
 gboolean entry_focus_in_event(GtkWidget *widget, GdkEventFocus *event, gpointer data);
 gboolean entry_focus_out_event(GtkWidget *widget, GdkEventFocus *event, gpointer data);
 void entry_changed_cb(GtkEntry *entry, gpointer data);
+void checkbox_changed_cb(GtkToggleButton *button, gpointer data);
 void notebook_page_switched(GtkNotebook *notebook, GtkNotebookPage *page, guint page_num, gpointer user_data);
 void about_button_clicked(GtkWidget *widget, gpointer data);
 void start_button_clicked(GtkWidget *widget, gpointer data);
