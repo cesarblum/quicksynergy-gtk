@@ -205,11 +205,12 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
             char *hostname;
 
             if(state->data.use_socks) {
-                size_t nchars = strlen("localhost:24800::24800") +
-                                strlen(state->data.hostname) + 1;
-                char *tunnel_spec = malloc(nchars);
-                snprintf(tunnel_spec, nchars, "localhost:24800:%s:24800",
+                char *tunnel_spec;
+                asprintf(&tunnel_spec, "localhost:24800:%s:24800",
                          state->data.hostname);
+                if(tunnel_spec == NULL)
+                    return;
+
                 argv = make_argv("ssh", "-N", "-L", tunnel_spec,
                                  state->data.hostname, NULL);
                 if(g_spawn_async(NULL, argv, NULL,
@@ -229,10 +230,11 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
                     gtk_widget_destroy(dialog);
 
                     g_error_free(err);
-
+                    free(tunnel_spec);
                     g_free(argv);
                     return;
                 }
+                free(tunnel_spec);
                 g_free(argv);
 
                 hostname = "localhost";
