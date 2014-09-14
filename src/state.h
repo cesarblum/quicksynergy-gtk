@@ -29,11 +29,13 @@ typedef struct qs_state {
         gchar *right;
         gchar *hostname;
         gchar *client_name;
+        gboolean use_socks;
     } data;
 
     struct {
         int running;
         GPid pid;
+        GPid tunnel_pid;
     } proc;
 
     struct {

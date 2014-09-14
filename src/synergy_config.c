@@ -72,6 +72,11 @@ qs_state_t *load_config() {
          g_key_file_get_value(key_file, "Use", "ClientName", NULL) :
          "");
 
+    state->data.use_socks =
+        (g_key_file_has_key(key_file, "Use", "SOCKS", NULL) ?
+         g_key_file_get_boolean(key_file, "Use", "SOCKS", NULL) :
+         0);
+
     state->ui.current_page =
         (g_key_file_has_key(key_file, "Settings", "LastPage", NULL) ?
          g_key_file_get_integer(key_file, "Settings", "LastPage", NULL) :
@@ -116,6 +121,9 @@ void save_config(qs_state_t *state) {
 
     g_key_file_set_value(key_file, "Use", "ClientName",
                          state->data.client_name);
+
+    g_key_file_set_boolean(key_file, "Use", "SOCKS",
+                         state->data.use_socks);
 
     g_key_file_set_integer(key_file, "Settings", "LastPage",
                            state->ui.current_page);
