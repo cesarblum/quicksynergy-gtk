@@ -196,8 +196,13 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
         if(page == 0) {
             save_synergy_config(state);
 
-            argv = make_argv("synergys", "-f", "--config",
-                ".quicksynergy/synergy.conf", NULL);
+            if(state->data.req_tunnel) {
+                argv = make_argv("synergys", "-f", "-a", "127.0.1.1",
+                    "--config", ".quicksynergy/synergy.conf", NULL);
+            } else {
+                argv = make_argv("synergys", "-f", "--config",
+                    ".quicksynergy/synergy.conf", NULL);
+            }
 
             state->proc.running = SYNERGY_SERVER_RUNNING;
         }

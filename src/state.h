@@ -30,6 +30,7 @@ typedef struct qs_state {
         gchar *hostname;
         gchar *client_name;
         gboolean use_socks;
+        gboolean req_tunnel;
     } data;
 
     struct {

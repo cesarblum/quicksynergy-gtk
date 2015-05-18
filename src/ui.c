@@ -54,6 +54,8 @@ GtkWidget *screen_entry_new(char **textp, const char *position) {
 }
 
 GtkWidget *make_server_tab(qs_state_t *state) {
+    GtkWidget *pane;
+    GtkWidget *checkbox;
     GtkWidget *table;
     GtkWidget *vbox;
     GtkWidget *image;
@@ -64,9 +66,12 @@ GtkWidget *make_server_tab(qs_state_t *state) {
     GtkWidget *right_entry;
     char hostname[64];
 
+    pane = gtk_vbox_new(FALSE, 18);
+    gtk_container_set_border_width(GTK_CONTAINER(pane), 12);
+
     /* build the table that will hold the server layout widgets */
     table = gtk_table_new(3, 3, TRUE);
-    gtk_container_set_border_width(GTK_CONTAINER(table), 12);
+    gtk_box_pack_start(GTK_BOX(pane), table, FALSE, FALSE, 0);
 
     /* text entries for server configuration */
     above_entry = screen_entry_new(&state->data.above, _("Above"));
@@ -94,7 +99,15 @@ GtkWidget *make_server_tab(qs_state_t *state) {
         gtk_box_pack_start(GTK_BOX(vbox), label,  FALSE, FALSE, 0);
     }
 
-    return table;
+    /* checkbox to require local/tunneled connections only */
+    checkbox = gtk_check_button_new_with_label(_("Tunneled only"));
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox), state->data.req_tunnel);
+    gtk_box_pack_start(GTK_BOX(pane), checkbox, FALSE, FALSE, 0);
+
+    g_signal_connect(G_OBJECT(checkbox), "toggled",
+        G_CALLBACK(checkbox_changed_cb), (gpointer) &state->data.req_tunnel);
+
+    return pane;
 }
 
 GtkWidget *make_client_tab(qs_state_t *state) {
