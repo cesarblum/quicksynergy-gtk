@@ -1,5 +1,5 @@
 /*  QuickSynergy -- a GUI for synergy
- *  Copyright (C) 2006, 2007, 2008, 2009 Cesar L. B. Silveira, Otavio C. Cordeiro
+ *  Copyright (C) 2006-2015 Cesar L. B. Silveira, Otavio C. Cordeiro
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -45,12 +45,19 @@ static gchar popup_menu_actions_xml[] =
     "</ui>\n";
 
 static GtkActionEntry popup_menu_actions[] = {
-    { "ActionQuit",     GTK_STOCK_QUIT,        N_("Quit"),     NULL, NULL, G_CALLBACK(quicksynergy_quit) },
+    {
+        "ActionQuit",
+        GTK_STOCK_QUIT,
+        N_("Quit"),
+        NULL,
+        NULL,
+        G_CALLBACK(quicksynergy_quit)
+    },
 };
 #endif
 
 gboolean entry_focus_in_event(
-        GtkWidget *widget, GdkEventFocus *event, gpointer data) {
+    GtkWidget *widget, GdkEventFocus *event, gpointer data) {
     char *text;
 
     text = (char *) gtk_entry_get_text(GTK_ENTRY(widget));
@@ -64,7 +71,7 @@ gboolean entry_focus_in_event(
 }
 
 gboolean entry_focus_out_event(
-        GtkWidget *widget, GdkEventFocus *event, gpointer data) {
+    GtkWidget *widget, GdkEventFocus *event, gpointer data) {
     char *text;
 
     text = (char *) gtk_entry_get_text(GTK_ENTRY(widget));
@@ -85,8 +92,11 @@ void checkbox_changed_cb(GtkToggleButton *button, gpointer data) {
     *((gboolean *) data) = gtk_toggle_button_get_active(button);
 }
 
-void notebook_page_switched(GtkNotebook *notebook, GtkNotebookPage *page,
-        guint page_num, gpointer data) {
+void notebook_page_switched(
+    GtkNotebook *notebook,
+    GtkNotebookPage *page,
+    guint page_num,
+    gpointer data) {
     qs_state_t *state = (qs_state_t *) data;
     state->ui.current_page = page_num;
 }
@@ -107,13 +117,13 @@ void about_button_clicked(GtkWidget *widget, gpointer data) {
     };
 
     static const gchar *documenters[] = {
-        "César L. B. Silveira <cesarbs@gmail.com>",
+        "Cesar L. Blum Silveira <cesarbs@gmail.com>",
         "Otávio C. Cordeiro <otavio@gmail.com>",
         NULL
     };
 
     static const gchar *copyright =
-        "Copyright \xc2\xa9 2006-2009 César L. B. Silveira, Otávio C. Cordeiro";
+        "Copyright \xc2\xa9 2006-2015 Cesar L. Blum Silveira, Otávio C. Cordeiro";
 
     GdkPixbuf *logo = make_logo();
 
@@ -125,7 +135,7 @@ void about_button_clicked(GtkWidget *widget, gpointer data) {
                     "logo", logo,
                     "translator-credits", _("translator-credits"),
                     "version", VERSION,
-                    "website", "http://quicksynergy.sourceforge.net",
+                    "website", "https://github.com/cesarbs/quicksynergy-gtk",
                     "name", "QuickSynergy",
                     NULL);
 
@@ -218,14 +228,22 @@ void start_button_clicked(GtkWidget *widget, gpointer data) {
 
                 argv = make_argv("ssh", "-N", "-L", tunnel_spec,
                                  state->data.hostname, NULL);
-                if(g_spawn_async(NULL, argv, NULL,
-                                 G_SPAWN_DO_NOT_REAP_CHILD | G_SPAWN_SEARCH_PATH,
-                                 NULL, NULL, &state->proc.tunnel_pid, &err)) {
-                    g_child_watch_add(state->proc.tunnel_pid, tunnel_child_watch, state);
+                if(g_spawn_async(
+                       NULL,
+                       argv,
+                       NULL,
+                       G_SPAWN_DO_NOT_REAP_CHILD | G_SPAWN_SEARCH_PATH,
+                       NULL,
+                       NULL,
+                       &state->proc.tunnel_pid,
+                       &err)) {
+                    g_child_watch_add(
+                        state->proc.tunnel_pid, tunnel_child_watch, state);
                 } else {
                     GtkWidget *dialog;
 
-                    dialog = gtk_message_dialog_new(GTK_WINDOW(state->ui.main_window),
+                    dialog = gtk_message_dialog_new(
+                        GTK_WINDOW(state->ui.main_window),
                         GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
                         "%s", err->message);
                     gtk_window_set_title(GTK_WINDOW(dialog), _("Error"));
