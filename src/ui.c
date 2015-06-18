@@ -137,7 +137,7 @@ GtkWidget *make_client_tab(qs_state_t *state) {
     g_signal_connect(G_OBJECT(entry), "changed",
         G_CALLBACK(entry_changed_cb), (gpointer) &state->data.hostname);
 
-    checkbox = gtk_check_button_new_with_label(_("SOCKS"));
+    checkbox = gtk_check_button_new_with_label(_("Use SOCKS"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox), state->data.use_socks);
     gtk_box_pack_start(GTK_BOX(vbox), checkbox, FALSE, FALSE, 0);
 
