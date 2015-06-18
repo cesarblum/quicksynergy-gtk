@@ -1,7 +1,4 @@
-General Information
-===================
-
-This is QuickSynergy version 0.9.0. QuickSynergy is a simple graphical user
+QuickSynergy is a simple graphical user
 interface for synergy, an application that allows you to share
 your mouse and keyboard with other computers over a TCP/IP network.
 This is also known as "software KVM", altough in true
@@ -10,24 +7,3 @@ KVM the monitor is also shared.
 QuickSynergy does not aim to provide a full-featured user interface.
 Instead, it provides an interface that is as simple as possible and that
 allows users to promptly get synergy running on their machines.
-
-Installation
-============
-
-See the INSTALL file in this package.
-
-How to report bugs
-==================
-
-Send your bug reports to cesarbs@gmail.com. The following information
-should be provided:
-
-* The version of QuickSynergy you are using.
-
-* The version of synergy you are using.
-
-* The operating system on which QuickSynergy crashed (if Linux, also inform
-  the distribution).
-  
-* The steps required to reproduce the bug, or the situation in which it
-  occurred.
